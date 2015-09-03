@@ -1,0 +1,170 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="sunless-sea.css"></style>
+
+		<script src="lib/jquery-1.11.2.js"></script>
+
+		<script type="text/javascript" src="objects/clump.js"></script>
+		<script type="text/javascript" src="objects/lump.js"></script>
+		<script type="text/javascript" src="objects/quality.js"></script>
+		<script type="text/javascript" src="objects/quality-requirement.js"></script>
+		<script type="text/javascript" src="objects/quality-effect.js"></script>
+		<script type="text/javascript" src="objects/event.js"></script>
+		<script type="text/javascript" src="objects/interaction.js"></script>
+		<script type="text/javascript" src="objects/area.js"></script>
+		<script type="text/javascript" src="objects/spawned-entity.js"></script>
+		<script type="text/javascript" src="objects/combat-attack.js"></script>
+		<script type="text/javascript" src="objects/exchange.js"></script>
+		<script type="text/javascript" src="objects/shop.js"></script>
+		<script type="text/javascript" src="objects/availability.js"></script>
+		<script type="text/javascript" src="objects/tile.js"></script>
+		<script type="text/javascript" src="ui.js"></script>
+	</head>
+	<body>
+
+<div class="loading-controls">
+	<div id="drop-zone">Drop all Sunless Sea JSON files here</div>
+
+	<select id="type">
+		<option value="Quality">1. Qualities</option>
+		<option value="Event">2. Events</option>
+	</select>
+
+	<select id="operation">
+		<option value="any">Any/None</option>
+		<option value="additive">Additive</option>
+		<option value="subtractive">Subtractive</option>
+	</select>
+
+	<input type="button" id="paths-to-node" value="Paths to node" />
+</div>
+
+<div id="tabs">
+	<ul class="buttons">
+		<li data-type="File" class="active">Files</li>
+		<li data-type="Event">Events</li>
+		<li data-type="Quality">Qualities</li>
+		<li data-type="Area">Areas</li>
+		<li data-type="SpawnedEntity">Spawned Entities</li>
+		<li data-type="CombatAttack">Combat Attacks</li>
+		<li data-type="Exchange">Exchanges</li>
+		<li data-type="Tile">Tiles</li>
+		<li data-type="Query">Query</li>
+	</ul>
+	<div class="panes">
+		<div class="pane file">
+			<h3>File list</h3>
+			<div id="list"></div>
+		</div>
+		<div class="pane event">
+			<h3>Events</h3>
+			<div id="event-list"></div>
+		</div>
+		<div class="pane quality">
+			<h3>Qualities</h3>
+			<div id="quality-list"></div>
+		</div>
+		<div class="pane area">
+			<h3>Areas</h3>
+			<div id="area-list"></div>
+		</div>
+		<div class="pane spawnedentity">
+			<h3>Spawned Entity</h3>
+			<div id="spawnedentity-list"></div>
+		</div>
+		<div class="pane combatattack">
+			<h3>Combat Attacks</h3>
+			<div id="combatattack-list"></div>
+		</div>
+		<div class="pane exchange">
+			<h3>Exchanges</h3>
+			<div id="exchange-list"></div>
+		</div>
+		<div class="pane tile">
+			<h3>Tiles</h3>
+			<div id="tile-list"></div>
+		</div>
+		<div class="pane query">
+			<h3 class="pane-title">Query</h3>
+			<div id="query-tree"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$("#tabs .buttons li").on("click", function(je) {
+
+			var type = $(this).attr("data-type");
+
+			$("#tabs .panes .pane").hide();	// Hide all panes
+			$("#tabs .buttons li").removeClass("active");	// Deactivate all buttons
+
+			$("#tabs .panes ."+type.toLowerCase()).show();
+			$("#tabs .buttons [data-type="+type+"]").addClass("active");
+		})
+
+	  // Setup the dnd listeners.
+	  window.object_types_to_load = 0;
+	  var dropZone = document.getElementById('drop-zone');
+
+		dropZone.addEventListener('dragenter', handleDragOver, false);
+		dropZone.addEventListener('dragleave', handleDragEnd, false);
+		dropZone.addEventListener('dragover', handleDragOver, false);
+
+	  dropZone.addEventListener('drop', handleDragDrop, false);
+
+		document.getElementById('paths-to-node').addEventListener('click', pathsToNode, false);
+
+		var whatIs = function(id) {
+			var possibilities = [];
+			Object.keys(window.all).forEach(function(key) {
+				if(window.all[key] instanceof Clump && window.all[key].id(id)) {
+					possibilities.push(key);
+				}
+			});
+			return possibilities;
+		};
+		
+		window.onload = function() {
+			window.all = {	// Master lookup of all discovered elements
+				Quality: new Clump([], Quality),
+				Event: new Clump([], Event),
+				Interaction: new Clump([], Interaction),
+				QualityEffect: new Clump([], QualityEffect),
+				QualityRequirement: new Clump([], QualityRequirement),
+				Area: new Clump([], Area),
+				SpawnedEntity: new Clump([], SpawnedEntity),
+				CombatAttack: new Clump([], CombatAttack),
+				Exchange: new Clump([], Exchange),
+				Shop: new Clump([], Shop),
+				Availability: new Clump([], Availability),
+				Tile: new Clump([], Tile),
+				TileVariant: new Clump([], TileVariant),
+				Port: new Clump([], Port)
+			};
+
+			window.loaded = {	// All elements loaded directly from the root of a file (ie, not embedded in any other element).  Each member is overwritten when loading a new file of that type
+				Quality: new Clump([], Quality),
+				Event: new Clump([], Event),
+				Interaction: new Clump([], Interaction),
+				QualityEffect: new Clump([], QualityEffect),
+				QualityRequirement: new Clump([], QualityRequirement),
+				Area: new Clump([], Area),
+				SpawnedEntity: new Clump([], SpawnedEntity),
+				CombatAttack: new Clump([], CombatAttack),
+				Exchange: new Clump([], Exchange),
+				Shop: new Clump([], Shop),
+				Availability: new Clump([], Availability),
+				Tile: new Clump([], Tile),
+				TileVariant: new Clump([], TileVariant),
+				Port: new Clump([], Port)
+			};
+		};
+
+	});
+
+</script>
+	</body>
+</html>
