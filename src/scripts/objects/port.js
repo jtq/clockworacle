@@ -51,4 +51,4 @@ Port.prototype.toDom = function(size, tag) {
 	return element;
 };
 
-exports = Port;
+module.exports = Port;

@@ -127,4 +127,4 @@ SpawnedEntity.prototype.toDom = function(size, includeChildren) {
 	return element;
 };
 
-exports = SpawnedEntity;
+module.exports = SpawnedEntity;

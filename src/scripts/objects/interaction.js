@@ -99,4 +99,4 @@ Interaction.prototype.toDom = function(size, includeChildren) {
 	return element;
 };
 
-exports = Interaction;
+module.exports = Interaction;

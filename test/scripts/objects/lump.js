@@ -1,6 +1,8 @@
 var assert = require("assert");
 var Lump = require("../../../src/scripts/objects/lump");
 
+//console.log("DEBUG", Lump);
+
 describe('Array', function() {
   describe('#indexOf()', function () {
     it('should return -1 when the value is not present', function () {

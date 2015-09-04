@@ -75,4 +75,4 @@ Availability.prototype.toDom = function(size) {
 	return element;
 };
 
-exports = Availability;
+module.exports = Availability;

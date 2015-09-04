@@ -81,4 +81,4 @@ QualityEffect.prototype.toDom = function(size) {
 	return element;
 };
 
-exports = QualityEffect;
+module.exports = QualityEffect;

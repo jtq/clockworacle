@@ -65,4 +65,4 @@ TileVariant.prototype.toDom = function(size, tag) {
 	return element;
 };
 
-exports = TileVariant;
+module.exports = TileVariant;

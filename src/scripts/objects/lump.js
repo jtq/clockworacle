@@ -142,4 +142,4 @@ Lump.prototype = {
 	}
 };
 
-exports = Lump;
+module.exports = Lump;

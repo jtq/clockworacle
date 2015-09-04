@@ -73,4 +73,4 @@ Exchange.prototype.toDom = function(size, includeChildren, tag) {
 	return element;
 };
 
-exports = Exchange;
+module.exports = Exchange;

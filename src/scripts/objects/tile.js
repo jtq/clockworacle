@@ -51,4 +51,4 @@ Tile.prototype.toDom = function(size, tag) {
 	return element;
 };
 
-exports = Tile;
+module.exports = Tile;
