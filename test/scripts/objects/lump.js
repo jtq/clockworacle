@@ -1,7 +1,5 @@
 var assert = require("assert");
-var Lump = require("../objects/lump");
-
-console.log(Lump);
+var Lump = require("../../../src/scripts/objects/lump");
 
 describe('Array', function() {
   describe('#indexOf()', function () {

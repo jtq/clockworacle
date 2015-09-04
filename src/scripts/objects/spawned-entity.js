@@ -73,8 +73,7 @@ SpawnedEntity.prototype.toDom = function(size, includeChildren) {
 		html = "<img class='icon' src='file:///C:/Users/James/AppData/LocalLow/Failbetter Games/Sunless Sea/images/sn/icons/"+this.image+"small.png' />";
 	}
 
-	html += "\
-	<h3 class='title'>"+this.HumanName+"</h3>";
+	html += "\n<h3 class='title'>"+this.HumanName+"</h3>";
 
 	if(size !== "small") {
 		if(this.qualitiesRequired) {

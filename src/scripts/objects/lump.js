@@ -43,7 +43,7 @@ Lump.prototype = {
 			return map;
 		}
 		else {
-			return null
+			return null;
 		}
 	},
 
@@ -107,7 +107,9 @@ Lump.prototype = {
 
 	evalAdvancedExpression: function(expr) {
 		expr = expr.replace(/\[d:(\d+)\]/gi, "Math.floor((Math.random()*$1)+1)");	// Replace [d:x] with JS to calculate random number on a Dx die
+		/*jshint -W061 */
 		return eval(expr);
+		/*jshint +W061 */
 	},
 
 	describeAdvancedExpression: function(expr) {

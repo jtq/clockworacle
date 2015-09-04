@@ -23,7 +23,7 @@ Port.prototype.wireUp = function() {
 	this.area = this.getOrCreate(Area, this.attribs.Area, this);
 
 	var self = this;
-	this.exchanges = all.Exchange.query("SettingIds", function(ids) { return ids.indexOf(self.SettingId) !== -1 });
+	this.exchanges = all.Exchange.query("SettingIds", function(ids) { return ids.indexOf(self.SettingId) !== -1; });
 
 	Lump.prototype.wireUp.call(this);
 };
@@ -42,9 +42,7 @@ Port.prototype.toDom = function(size, tag) {
 	var element =  document.createElement(tag);
 	element.className = "item "+this.constructor.name.toLowerCase()+"-item "+size;
 
-	html = "\
-	<h3 class='title'>"+this.Name+"</h3>\
-	";
+	html = "\n<h3 class='title'>"+this.Name+"</h3>";
 
 	element.innerHTML = html;
 

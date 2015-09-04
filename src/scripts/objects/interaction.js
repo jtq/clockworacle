@@ -50,8 +50,7 @@ Interaction.prototype.toDom = function(size, includeChildren) {
 		html = "<img class='icon' src='file:///C:/Users/James/AppData/LocalLow/Failbetter Games/Sunless Sea/images/sn/icons/"+this.Image+"small.png' />";
 	}
 
-	html += "\
-	<h3 class='title'>"+this.Name+"</h3>";
+	html += "\n<h3 class='title'>"+this.Name+"</h3>";
 
 	if(size != "small" && this.qualitiesRequired) {
 		html += "<div class='sidebar'>";

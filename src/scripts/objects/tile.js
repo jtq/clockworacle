@@ -11,7 +11,7 @@ Object.keys(Lump.prototype).forEach(function(member) { Tile.prototype[member] = 
 
 Tile.prototype.wireUp = function() {
 
-	this.tileVariants.forEach(function(tv) { tv.wireUp() });
+	this.tileVariants.forEach(function(tv) { tv.wireUp(); });
 
 	// Also create a list of all the ports and areas of each of the tilevariants in this object for convenience
 	var all_ports = {};
@@ -22,8 +22,8 @@ Tile.prototype.wireUp = function() {
 			all_areas[p.area.Id] = p.area;
 		});
 	});
-	this.ports = new Clump(Object.keys(all_ports).map(function(p) { return all_ports[p] }), Port, this);
-	this.areas = new Clump(Object.keys(all_areas).map(function(a) { return all_areas[a] }), Area, this);
+	this.ports = new Clump(Object.keys(all_ports).map(function(p) { return all_ports[p]; }), Port, this);
+	this.areas = new Clump(Object.keys(all_areas).map(function(a) { return all_areas[a]; }), Area, this);
 
 	Lump.prototype.wireUp.call(this);
 };
@@ -42,9 +42,7 @@ Tile.prototype.toDom = function(size, tag) {
 	var element =  document.createElement(tag);
 	element.className = "item "+this.constructor.name.toLowerCase()+"-item "+size;
 
-	html = "\
-	<h3 class='title'>"+this.Name+"</h3>\
-	";
+	html = "\n<h3 class='title'>"+this.Name+"</h3>";
 
 	element.innerHTML = html;
 

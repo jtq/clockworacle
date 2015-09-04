@@ -34,10 +34,10 @@ Object.keys(Lump.prototype).forEach(function(member) { TileVariant.prototype[mem
 
 TileVariant.prototype.wireUp = function() {
 
-	this.ports.forEach(function(p) { p.wireUp() });
+	this.ports.forEach(function(p) { p.wireUp(); });
 
 	// Also create a list of all the areas of each of the ports in this object for convenience
-	this.areas = new Clump(this.ports.map(function(p) { return p.area }), Area, this);
+	this.areas = new Clump(this.ports.map(function(p) { return p.area; }), Area, this);
 
 	Lump.prototype.wireUp.call(this);
 };
@@ -56,9 +56,7 @@ TileVariant.prototype.toDom = function(size, tag) {
 	var element =  document.createElement(tag);
 	element.className = "item "+this.constructor.name.toLowerCase()+"-item "+size;
 
-	html = "\
-	<h3 class='title'>"+this.HumanName+"</h3>\
-	";
+	html = "\n<h3 class='title'>"+this.HumanName+"</h3>";
 
 	element.innerHTML = html;
 

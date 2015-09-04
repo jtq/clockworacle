@@ -59,9 +59,7 @@ Event.prototype.toDom = function(size, includeChildren) {
 		html = "<img class='icon' src='file:///C:/Users/James/AppData/LocalLow/Failbetter Games/Sunless Sea/images/sn/icons/"+this.Image+"small.png' />";
 	}
 
-	html += "\
-	<h3 class='title'>"+this.Name+"\
-	"+(this.tag ? "<span class='tag "+this.tag+"'>"+this.tag+"</span>" : "")+"</h3>";
+	html += "\n<h3 class='title'>"+this.Name+"\n"+(this.tag ? "<span class='tag "+this.tag+"'>"+this.tag+"</span>" : "")+"</h3>";
 
 	if(size != "small" && (this.qualitiesRequired || this.qualitiesAffected)) {
 		html += "<div class='sidebar'>";

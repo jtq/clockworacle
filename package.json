@@ -17,8 +17,8 @@
     "mocha": "latest"
   },
   "scripts": {
-    "lint": "jshint **.js",
-    "test": "mocha test/",
+    "lint": "jshint src/ test/",
+    "test": "mocha --recursive test/",
     "env": "env"
   }
 }

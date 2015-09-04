@@ -19,9 +19,7 @@ Area.prototype.toDom = function(size) {
 		element.innerHTML = "<img class='icon' src='file:///C:/Users/James/AppData/LocalLow/Failbetter Games/Sunless Sea/images/sn/icons/"+this.ImageName+".png' />";
 	}
 
-	element.innerHTML += "\
-	<h3 class='title'>"+this.Name+"</h3>\
-	<p class='description'>"+this.Description+"</p>";
+	element.innerHTML += "\n<h3 class='title'>"+this.Name+"</h3>\n<p class='description'>"+this.Description+"</p>";
 
 	element.title = this.toString();
 

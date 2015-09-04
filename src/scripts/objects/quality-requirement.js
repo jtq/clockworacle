@@ -31,7 +31,7 @@ QualityRequirement.prototype.getChanceCap = function() {
 	}
 	
 	return Math.round(this.attribs.DifficultyLevel * ((100 + quality.DifficultyScaler + 7)/100));
-}
+};
 
 QualityRequirement.prototype.getQuantity = function() {
 	var condition = "";

@@ -14,7 +14,7 @@ function Clump(raw, Type, parent) {
 				}
 			});
 			if(newParent){
-				item.parents.push(parent)
+				item.parents.push(parent);
 			}
 		}
 		self.items[item.Id] = item;
@@ -40,7 +40,7 @@ Clump.prototype.get = function(index) {
 
 Clump.prototype.id = function(id) {
 	return this.items[id];
-}
+};
 
 Clump.prototype.each = function() {
 	var args = Array.prototype.slice.call(arguments);
@@ -57,7 +57,7 @@ Clump.prototype.each = function() {
 			return item[args[0]];
 		}
 	});
-}
+};
 
 Clump.prototype.forEach = function(callback) {
 	for(var id in this.items) {
@@ -109,7 +109,7 @@ Clump.prototype.same = function() {
       }
     }
     return target;
-  }
+  };
 
 	var template = clone(this.get(0).attribs);
 
@@ -128,20 +128,20 @@ Clump.prototype.same = function() {
 Clump.prototype.distinct = function(field) {
 	var sampleValues = {};
 	this.forEach(function(item) {
-		var value = item[field]
+		var value = item[field];
 		sampleValues[value] = value;	// Cheap de-duping with a hash
 	});
 	return Object.keys(sampleValues).map(function(key) { return sampleValues[key]; });
-}
+};
 
 Clump.prototype.distinctRaw = function(field) {
 	var sampleValues = {};
 	this.forEach(function(item) {
-		var value = item.attribs[field]
+		var value = item.attribs[field];
 		sampleValues[value] = value;	// Cheap de-duping with a hash
 	});
 	return Object.keys(sampleValues).map(function(key) { return sampleValues[key]; });
-}
+};
 
 Clump.prototype.query = function(field, value) {
 	var matches = [];
@@ -152,7 +152,7 @@ Clump.prototype.query = function(field, value) {
 	if(typeof value === "function") {	// If value is a function, pass it the candidate and return the result
 		test = function(candidate) {
 			return !!value(candidate);
-		};;
+		};
 	}
 	else if(typeof value === "object") {
 		if(value instanceof RegExp) {
@@ -198,18 +198,18 @@ Clump.prototype.queryRaw = function(field, value) {
 	if(typeof value === "function") {	// If value is a function, pass it the candidate and return the result
 		test = function(candidate) {
 			return !!value(candidate);
-		}
+		};
 	}
 	else if(typeof value === "object") {
 		if(value instanceof RegExp) {
 			test = function(candidate) {
 				return value.test(candidate);
-			}
+			};
 		}
 		else if(value instanceof Array) {	// If value is an array, test for the presence of the candidate value in the array
 			test = function(candidate) {
 				return value.indexOf(candidate) !== -1;
-			}
+			};
 		}
 		else {	// If value is a hash... what do we do?
 			// Check the candidate for each field in the hash in turn, and include the candidate if any/all of them have the same value as the corresponding value-hash field?
@@ -252,11 +252,11 @@ Clump.prototype.toDom = function(size, includeChildren, tag, firstChild) {
 		element.appendChild(i.toDom(size, includeChildren));
 	});
 	return element;
-}
+};
 
 Clump.prototype.describe = function() {
 	var self = this;
-	return Object.keys(this.items).map(function(i) { return self.items[i].toString() }).join(" and ")
+	return Object.keys(this.items).map(function(i) { return self.items[i].toString(); }).join(" and ");
 };
 
 exports = Clump;

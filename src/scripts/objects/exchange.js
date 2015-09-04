@@ -17,7 +17,7 @@ Exchange.prototype.wireUp = function() {
 	this.shops = new Clump(this.attribs.Shops || [], Shop, this);
 	var self = this;
 	this.ports = all.Port.query("SettingId", function(id) {
-		return self.SettingIds.indexOf(id) !== -1
+		return self.SettingIds.indexOf(id) !== -1;
 	});
 	this.ports.forEach(function (p) {
 		self.parents.push(p);
@@ -42,10 +42,9 @@ Exchange.prototype.toDom = function(size, includeChildren, tag) {
 	var element =  document.createElement(tag);
 	element.className = "item "+this.constructor.name.toLowerCase()+"-item "+size;
 
-	html = "\
-	<img class='icon' src='file:///C:/Users/James/AppData/LocalLow/Failbetter Games/Sunless Sea/images/sn/icons/"+this.Image+".png' />\
-	<h3 class='title'>"+this.Name+"</h3>\
-	<p class='description'>"+this.Description+"</p>";
+	html = "\n<img class='icon' src='file:///C:/Users/James/AppData/LocalLow/Failbetter Games/Sunless Sea/images/sn/icons/"+this.Image+".png' />";
+	html += "\n<h3 class='title'>"+this.Name+"</h3>";
+	html += "\n<p class='description'>"+this.Description+"</p>";
 
 	element.innerHTML = html;
 
