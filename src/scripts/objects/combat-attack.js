@@ -1,3 +1,8 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+
+var api;
+
 function CombatAttack(raw, parent) {
 	this.straightCopy = [
 		'Name',
@@ -25,13 +30,15 @@ function CombatAttack(raw, parent) {
 
 Object.keys(Lump.prototype).forEach(function(member) { CombatAttack.prototype[member] = Lump.prototype[member]; });
 
-CombatAttack.prototype.wireUp = function() {
+CombatAttack.prototype.wireUp = function(theApi) {
 
-	this.qualityRequired = this.get(Quality, this.attribs.QualityRequiredId, this);
-	this.qualityCost = this.get(Quality, this.attribs.QualityCostId, this);
-	this.exposedQuality = this.get(Quality, this.attribs.ExposedQualityId, this);
+	api = theApi;
 
-	Lump.prototype.wireUp.call(this);
+	this.qualityRequired = api.get(api.types.Quality, this.attribs.QualityRequiredId, this);
+	this.qualityCost = api.get(api.types.Quality, this.attribs.QualityCostId, this);
+	this.exposedQuality = api.get(api.types.Quality, this.attribs.ExposedQualityId, this);
+
+	Lump.prototype.wireUp.call(this, api);
 };
 
 CombatAttack.prototype.toString = function() {
@@ -61,11 +68,11 @@ CombatAttack.prototype.toDom = function(size, includeChildren) {
 
 		if(this.qualityRequired) {
 			html += "<h4>Required</h4>";
-			html += (new Clump([this.qualityRequired], Quality)).toDom("small", false, "ul").outerHTML;
+			html += (new Clump([this.qualityRequired], api.types.Quality)).toDom("small", false, "ul").outerHTML;
 		}
 		if(this.qualityCost) {
 			html += "<h4>Cost</h4>";
-			html += (new Clump([this.qualityCost], Quality)).toDom("small", false, "ul").outerHTML;
+			html += (new Clump([this.qualityCost], api.types.Quality)).toDom("small", false, "ul").outerHTML;
 		}
 		html += "</div>";
 	}
@@ -100,7 +107,7 @@ CombatAttack.prototype.toDom = function(size, includeChildren) {
 					events.push(defaultEvent);
 				}
 				if(events.length) {
-					var wrapperClump = new Clump(events, Event);
+					var wrapperClump = new Clump(events, api.types.Event);
 					var child_events = wrapperClump.toDom(size, true);
 
 					child_events.classList.add("child-list");

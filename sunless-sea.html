@@ -4,23 +4,6 @@
 
 		<script src="lib/jquery-1.11.2.js"></script>
 
-		<script type="text/javascript" src="src/scripts/objects/clump.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/lump.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/quality.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/quality-requirement.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/quality-effect.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/event.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/interaction.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/area.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/spawned-entity.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/combat-attack.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/exchange.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/shop.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/availability.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/tile.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/tile-variant.js"></script>
-		<script type="text/javascript" src="src/scripts/objects/port.js"></script>
-		<script type="text/javascript" src="src/scripts/ui.js"></script>
 	</head>
 	<body>
 
@@ -93,80 +76,8 @@
 	</div>
 </div>
 
-<script type="text/javascript">
 
-	$(document).ready(function() {
-		$("#tabs .buttons li").on("click", function(je) {
+		<script type="text/javascript" src="build/compiled.js"></script>
 
-			var type = $(this).attr("data-type");
-
-			$("#tabs .panes .pane").hide();	// Hide all panes
-			$("#tabs .buttons li").removeClass("active");	// Deactivate all buttons
-
-			$("#tabs .panes ."+type.toLowerCase()).show();
-			$("#tabs .buttons [data-type="+type+"]").addClass("active");
-		})
-
-	  // Setup the dnd listeners.
-	  window.object_types_to_load = 0;
-	  var dropZone = document.getElementById('drop-zone');
-
-		dropZone.addEventListener('dragenter', handleDragOver, false);
-		dropZone.addEventListener('dragleave', handleDragEnd, false);
-		dropZone.addEventListener('dragover', handleDragOver, false);
-
-	  dropZone.addEventListener('drop', handleDragDrop, false);
-
-		document.getElementById('paths-to-node').addEventListener('click', pathsToNode, false);
-
-		var whatIs = function(id) {
-			var possibilities = [];
-			Object.keys(window.all).forEach(function(key) {
-				if(window.all[key] instanceof Clump && window.all[key].id(id)) {
-					possibilities.push(key);
-				}
-			});
-			return possibilities;
-		};
-		
-		window.onload = function() {
-			window.all = {	// Master lookup of all discovered elements
-				Quality: new Clump([], Quality),
-				Event: new Clump([], Event),
-				Interaction: new Clump([], Interaction),
-				QualityEffect: new Clump([], QualityEffect),
-				QualityRequirement: new Clump([], QualityRequirement),
-				Area: new Clump([], Area),
-				SpawnedEntity: new Clump([], SpawnedEntity),
-				CombatAttack: new Clump([], CombatAttack),
-				Exchange: new Clump([], Exchange),
-				Shop: new Clump([], Shop),
-				Availability: new Clump([], Availability),
-				Tile: new Clump([], Tile),
-				TileVariant: new Clump([], TileVariant),
-				Port: new Clump([], Port)
-			};
-
-			window.loaded = {	// All elements loaded directly from the root of a file (ie, not embedded in any other element).  Each member is overwritten when loading a new file of that type
-				Quality: new Clump([], Quality),
-				Event: new Clump([], Event),
-				Interaction: new Clump([], Interaction),
-				QualityEffect: new Clump([], QualityEffect),
-				QualityRequirement: new Clump([], QualityRequirement),
-				Area: new Clump([], Area),
-				SpawnedEntity: new Clump([], SpawnedEntity),
-				CombatAttack: new Clump([], CombatAttack),
-				Exchange: new Clump([], Exchange),
-				Shop: new Clump([], Shop),
-				Availability: new Clump([], Availability),
-				Tile: new Clump([], Tile),
-				TileVariant: new Clump([], TileVariant),
-				Port: new Clump([], Port)
-			};
-		};
-
-	});
-
-</script>
 	</body>
 </html>

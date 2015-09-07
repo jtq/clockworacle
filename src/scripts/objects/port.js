@@ -1,3 +1,7 @@
+var Lump = require('./lump');
+
+var api;
+
 function Port(raw, parent) {
 	this.straightCopy = [
 		'Name',
@@ -18,14 +22,16 @@ function Port(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { Port.prototype[member] = Lump.prototype[member]; });
 
-Port.prototype.wireUp = function() {
+Port.prototype.wireUp = function(theApi) {
+	
+	api = theApi;
 
-	this.area = this.getOrCreate(Area, this.attribs.Area, this);
+	this.area = api.getOrCreate(api.types.Area, this.attribs.Area, this);
 
 	var self = this;
-	this.exchanges = all.Exchange.query("SettingIds", function(ids) { return ids.indexOf(self.SettingId) !== -1; });
+	this.exchanges = api.library.Exchange.query("SettingIds", function(ids) { return ids.indexOf(self.SettingId) !== -1; });
 
-	Lump.prototype.wireUp.call(this);
+	Lump.prototype.wireUp.call(this, api);
 };
 
 Port.prototype.toString = function(long) {

@@ -1,3 +1,7 @@
+var Lump = require('./lump');
+
+var api;
+
 function Availability(raw, parent) {
 	this.straightCopy = [
 		'Cost',
@@ -10,12 +14,14 @@ function Availability(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { Availability.prototype[member] = Lump.prototype[member]; });
 
-Availability.prototype.wireUp = function() {
+Availability.prototype.wireUp = function(theApi) {
 
-	this.quality = this.getOrCreate(Quality, this.attribs.Quality, this);
-	this.purchaseQuality = this.getOrCreate(Quality, this.attribs.PurchaseQuality, this);
+	api = theApi;
 
-	Lump.prototype.wireUp.call(this);
+	this.quality = api.getOrCreate(api.types.Quality, this.attribs.Quality, this);
+	this.purchaseQuality = api.getOrCreate(api.types.Quality, this.attribs.PurchaseQuality, this);
+
+	Lump.prototype.wireUp.call(this, api);
 };
 
 Availability.prototype.isAdditive = function() {

@@ -1,3 +1,8 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+
+var api;
+
 function Shop(raw, parent) {
 	this.straightCopy = [
 		'Id',
@@ -13,9 +18,11 @@ function Shop(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { Shop.prototype[member] = Lump.prototype[member]; });
 
-Shop.prototype.wireUp = function() {
+Shop.prototype.wireUp = function(theApi) {
 
-	this.availabilities = new Clump(this.attribs.Availabilities || [], Availability, this);
+	api = theApi;
+
+	this.availabilities = new Clump(this.attribs.Availabilities || [], api.types.Availability, this);
 
 	Lump.prototype.wireUp.call(this);
 };

@@ -1,3 +1,11 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+var TileVariant = require('./tile-variant');
+var Port = require('./port');
+var Area = require('./area');
+
+var api;
+
 function Tile(raw, parent) {
 	this.straightCopy = [
 		'Name'
@@ -9,9 +17,11 @@ function Tile(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { Tile.prototype[member] = Lump.prototype[member]; });
 
-Tile.prototype.wireUp = function() {
+Tile.prototype.wireUp = function(theApi) {
 
-	this.tileVariants.forEach(function(tv) { tv.wireUp(); });
+	api = theApi;
+
+	this.tileVariants.forEach(function(tv) { tv.wireUp(api); });
 
 	// Also create a list of all the ports and areas of each of the tilevariants in this object for convenience
 	var all_ports = {};
@@ -22,8 +32,8 @@ Tile.prototype.wireUp = function() {
 			all_areas[p.area.Id] = p.area;
 		});
 	});
-	this.ports = new Clump(Object.keys(all_ports).map(function(p) { return all_ports[p]; }), Port, this);
-	this.areas = new Clump(Object.keys(all_areas).map(function(a) { return all_areas[a]; }), Area, this);
+	this.ports = new Clump(Object.keys(all_ports).map(function(p) { return all_ports[p]; }), api.types.Port, this);
+	this.areas = new Clump(Object.keys(all_areas).map(function(a) { return all_areas[a]; }), api.types.Area, this);
 
 	Lump.prototype.wireUp.call(this);
 };

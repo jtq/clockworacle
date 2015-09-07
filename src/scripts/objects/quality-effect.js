@@ -1,19 +1,29 @@
+var Lump = require('./lump');
+
+var api;
+
 function QualityEffect(raw, parent) {
 	this.straightCopy = ["Level", "SetToExactly"];
 	Lump.apply(this, arguments);
 
-	this.changeByAdvanced = this.describeAdvancedExpression(raw.ChangeByAdvanced);
-	this.setToExactlyAdvanced = this.describeAdvancedExpression(raw.SetToExactlyAdvanced);
+	// May involve Quality object references, so can't resolve until after all objects are wired up
+	this.setToExactlyAdvanced = null;
+	this.changeByAdvanced = null;	
 
 	this.associatedQuality = null;
+	
 }
 Object.keys(Lump.prototype).forEach(function(member) { QualityEffect.prototype[member] = Lump.prototype[member]; });
 
-QualityEffect.prototype.wireUp = function() {
+QualityEffect.prototype.wireUp = function(theApi) {
 
-	this.associatedQuality = this.get(Quality, this.attribs.AssociatedQualityId, this);
+	api = theApi;
 
-	Lump.prototype.wireUp.call(this);
+	this.associatedQuality = api.get(api.types.Quality, this.attribs.AssociatedQualityId, this);
+	this.setToExactlyAdvanced = api.describeAdvancedExpression(this.attribs.SetToExactlyAdvanced);
+	this.changeByAdvanced = api.describeAdvancedExpression(this.attribs.ChangeByAdvanced);
+
+	Lump.prototype.wireUp.call(this, api);
 };
 
 QualityEffect.prototype.getQuantity = function() {

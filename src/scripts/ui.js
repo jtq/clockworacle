@@ -1,3 +1,25 @@
+var api = require('./sunless-sea');
+var library = require('./library');
+var Lump = require('./objects/lump');
+var Clump = require('./objects/clump');
+
+var Types = {
+  Quality: require('./objects/quality'),
+  Event: require('./objects/event'),
+  Interaction: require('./objects/interaction'),
+  QualityEffect: require('./objects/quality-effect'),
+  QualityRequirement: require('./objects/quality-requirement'),
+  Area: require('./objects/area'),
+  SpawnedEntity: require('./objects/spawned-entity'),
+  CombatAttack: require('./objects/combat-attack'),
+  Exchange: require('./objects/exchange'),
+  Shop: require('./objects/shop'),
+  Availability: require('./objects/availability'),
+  Tile: require('./objects/tile'),
+  TileVariant: require('./objects/tile-variant'),
+  Port: require('./objects/port'),
+};
+
 function handleDragOver(evt) {
   evt.stopPropagation();
   evt.preventDefault();
@@ -60,7 +82,8 @@ function readSingleFile(file, typeName) {
     
   	var obj = JSON.parse(contents);
     console.log("Loaded "+typeName);
-  	loaded[typeName] = new Clump(obj, window[typeName]);
+    var type = Types[typeName];
+  	loaded[typeName] = new Clump(obj, type);
 
     window.files_to_load--;
 
@@ -74,18 +97,18 @@ function readSingleFile(file, typeName) {
 }
 
 function wireUpObjects() {
-  Object.keys(all).forEach(function(type) {
+  Object.keys(api.types).forEach(function(type) {
     console.log("Wired up "+type);
-    all[type].forEach(function(lump) {
+    api.library[type].forEach(function(lump) {
       if(lump.wireUp) {
-        lump.wireUp();
+        lump.wireUp(api);
       }
     });
   });
 }
 
 function renderLists() {
-  Object.keys(all).forEach(function(type) {
+  Object.keys(api.library).forEach(function(type) {
     renderList(loaded[type]); // Only display directly loaded (root-level) Lumps, to prevent the list becoming unwieldy
   });
 }
@@ -116,7 +139,7 @@ function pathsToNode() {
     return;
   }
 
-  var item = all[type].id(id);
+  var item = api.library[type].id(id);
 
   if(!item) {
     alert("Could not find "+type+" "+id);
@@ -141,10 +164,10 @@ function pathsToNode() {
         lump = route_node.node;
 
         if(operation === "additive") {
-          return lump.isOneOf([QualityEffect, Availability]) && lump.isAdditive();
+          return lump.isOneOf([Types.QualityEffect, Types.Availability]) && lump.isAdditive();
         }
         else if(operation === "subtractive") {
-          return lump.isOneOf([QualityEffect, Availability]) && lump.isSubtractive();
+          return lump.isOneOf([Types.QualityEffect, Types.Availability]) && lump.isSubtractive();
         }
       });
     }
@@ -178,16 +201,16 @@ function pathsToNode_Recurse(node, seen, parent) {
 
   var this_node = new RouteNode(/*node.linkToEvent ? node.linkToEvent :*/ node); // If this node is just a link to another one, skip over the useless link
 
-  if(node instanceof SpawnedEntity) {
+  if(node instanceof Types.SpawnedEntity) {
     return this_node;   // Leaf node in tree
   }
-  else if(node instanceof Event && node.tag === "use") {
+  else if(node instanceof Types.Event && node.tag === "use") {
     return this_node;   // Leaf node in tree
   }
-  else if(node instanceof Event && parent instanceof Event && (parent.tag === "killed" || parent.tag === "pacified")) { // If this is an event that's reachable by killing a monster, don't recurse any other causes (as they're usually misleading/circular)
+  else if(node instanceof Types.Event && parent instanceof Types.Event && (parent.tag === "killed" || parent.tag === "pacified")) { // If this is an event that's reachable by killing a monster, don't recurse any other causes (as they're usually misleading/circular)
     return false;
   }
-  else if (node instanceof Port) {
+  else if (node instanceof Types.Port) {
     return new RouteNode(node.area);
   }
   else if(node.limitedToArea && node.limitedToArea.Id !== 101956) {
@@ -258,10 +281,10 @@ function describe(ancestry) {
   }
   
   var guide = "";
-  if(a[0] instanceof Area) {
-    if(a[1] instanceof Event) {
+  if(a[0] instanceof Types.Area) {
+    if(a[1] instanceof Types.Event) {
       guide = "Seek "+a[1].Name+" in "+a[0].Name;
-      if(a[2] instanceof Interaction) {
+      if(a[2] instanceof Types.Interaction) {
         guide += " and ";
         if("\"'".indexOf(a[2].Name[0]) !== -1) {
           guide += "exclaim ";
@@ -273,24 +296,24 @@ function describe(ancestry) {
     else {
       guide = "Travel to "+a[0].Name;
 
-      if(a[1] instanceof Interaction) {
+      if(a[1] instanceof Types.Interaction) {
         guide += " and "+lower(a[1].Name);
       }
-      else if(a[1] instanceof Exchange && a[2] instanceof Shop) {
+      else if(a[1] instanceof Types.Exchange && a[2] instanceof Types.Shop) {
         guide += " and look for "+a[2].Name+" in "+a[1].Name;
       }
 
       guide += ".";
     }
   }
-  else if(a[0] instanceof SpawnedEntity) {
+  else if(a[0] instanceof Types.SpawnedEntity) {
     guide = "Find and best a "+a[0].HumanName;
-    if(a[2] instanceof Interaction) {
+    if(a[2] instanceof Types.Interaction) {
       guide += ", then " + lower(a[2].Name);
     }
     guide += ".";
   }
-  else if(a[0] instanceof Event && a[0].tag === "use" && !(a[1] instanceof QualityRequirement)) {
+  else if(a[0] instanceof Types.Event && a[0].tag === "use" && !(a[1] instanceof Types.QualityRequirement)) {
     guide = "Acquire " + lower(a[0].Name) + " and " + lower(a[1].Name) + ".";
   }
 
@@ -323,5 +346,76 @@ function requirements(ancestry) {
 
   var result = Object.keys(reqs).map(function(key) { return reqs[key]; });
 
-  return new Clump(result, QualityRequirement);
+  return new Clump(result, Types.QualityRequirement);
 }
+
+
+
+    $("#tabs .buttons li").on("click", function(je) {
+
+      var type = $(this).attr("data-type");
+
+      $("#tabs .panes .pane").hide(); // Hide all panes
+      $("#tabs .buttons li").removeClass("active"); // Deactivate all buttons
+
+      $("#tabs .panes ."+type.toLowerCase()).show();
+      $("#tabs .buttons [data-type="+type+"]").addClass("active");
+    });
+
+    // Setup the dnd listeners.
+    window.object_types_to_load = 0;
+    var dropZone = document.getElementById('drop-zone');
+
+    dropZone.addEventListener('dragenter', handleDragOver, false);
+    dropZone.addEventListener('dragleave', handleDragEnd, false);
+    dropZone.addEventListener('dragover', handleDragOver, false);
+
+    dropZone.addEventListener('drop', handleDragDrop, false);
+
+    document.getElementById('paths-to-node').addEventListener('click', pathsToNode, false);
+
+    var whatIs = function(id) {
+      var possibilities = [];
+      Object.keys(api.library).forEach(function(key) {
+        if(api.library[key] instanceof Clump && api.library[key].id(id)) {
+          possibilities.push(key);
+        }
+      });
+      return possibilities;
+    };
+    
+    window.onload = function() {
+      window.all = {  // Master lookup of all discovered elements
+        Quality: new Clump([], Types.Quality),
+        Event: new Clump([], Types.Event),
+        Interaction: new Clump([], Types.Interaction),
+        QualityEffect: new Clump([], Types.QualityEffect),
+        QualityRequirement: new Clump([], Types.QualityRequirement),
+        Area: new Clump([], Types.Area),
+        SpawnedEntity: new Clump([], Types.SpawnedEntity),
+        CombatAttack: new Clump([], Types.CombatAttack),
+        Exchange: new Clump([], Types.Exchange),
+        Shop: new Clump([], Types.Shop),
+        Availability: new Clump([], Types.Availability),
+        Tile: new Clump([], Types.Tile),
+        TileVariant: new Clump([], Types.TileVariant),
+        Port: new Clump([], Types.Port)
+      };
+
+      window.loaded = { // All elements loaded directly from the root of a file (ie, not embedded in any other element).  Each member is overwritten when loading a new file of that type
+        Quality: new Clump([], Types.Quality),
+        Event: new Clump([], Types.Event),
+        Interaction: new Clump([], Types.Interaction),
+        QualityEffect: new Clump([], Types.QualityEffect),
+        QualityRequirement: new Clump([], Types.QualityRequirement),
+        Area: new Clump([], Types.Area),
+        SpawnedEntity: new Clump([], Types.SpawnedEntity),
+        CombatAttack: new Clump([], Types.CombatAttack),
+        Exchange: new Clump([], Types.Exchange),
+        Shop: new Clump([], Types.Shop),
+        Availability: new Clump([], Types.Availability),
+        Tile: new Clump([], Types.Tile),
+        TileVariant: new Clump([], Types.TileVariant),
+        Port: new Clump([], Types.Port)
+      };
+    };

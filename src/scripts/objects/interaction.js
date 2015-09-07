@@ -1,3 +1,8 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+
+var api;
+
 function Interaction(raw, parent) {
 	this.straightCopy = [
 	'Name',
@@ -16,20 +21,22 @@ function Interaction(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { Interaction.prototype[member] = Lump.prototype[member]; });
 
-Interaction.prototype.wireUp = function() {
+Interaction.prototype.wireUp = function(theApi) {
 
-	this.qualitiesRequired = new Clump(this.attribs.QualitiesRequired || [], QualityRequirement, this);
-	this.successEvent = this.getOrCreate(Event, this.attribs.SuccessEvent, this);
+	api = theApi;
+
+	this.qualitiesRequired = new Clump(this.attribs.QualitiesRequired || [], api.types.QualityRequirement, this);
+	this.successEvent = api.getOrCreate(api.types.Event, this.attribs.SuccessEvent, this);
 	if(this.successEvent) {
 		this.successEvent.tag = "success";
 	}
-	this.defaultEvent = this.getOrCreate(Event, this.attribs.DefaultEvent, this);
+	this.defaultEvent = api.getOrCreate(api.types.Event, this.attribs.DefaultEvent, this);
 	var qualitiesRequired =  this.qualitiesRequired;
 	if(this.defaultEvent && this.successEvent && qualitiesRequired && qualitiesRequired.size()) {
 		this.defaultEvent.tag = "failure";
 	}
 
-	Lump.prototype.wireUp.call(this);
+	Lump.prototype.wireUp.call(this, api);
 };
 
 Interaction.prototype.toString = function() {
@@ -86,7 +93,7 @@ Interaction.prototype.toDom = function(size, includeChildren) {
 					events.push(defaultEvent);
 				}
 				if(events.length) {
-					var wrapperClump = new Clump(events, Event);
+					var wrapperClump = new Clump(events, api.types.Event);
 					var child_events = wrapperClump.toDom("normal", true);
 
 					child_events.classList.add("child-list");

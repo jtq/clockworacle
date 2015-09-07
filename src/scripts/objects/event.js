@@ -1,3 +1,8 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+
+var api;
+
 function Event(raw, parent) {
 	this.straightCopy = [
 	'Name',
@@ -28,17 +33,19 @@ function Event(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { Event.prototype[member] = Lump.prototype[member]; });
 
-Event.prototype.wireUp = function() {
+Event.prototype.wireUp = function(theApi) {
 
-	this.qualitiesRequired = new Clump(this.attribs.QualitiesRequired || [], QualityRequirement, this);
-	this.qualitiesAffected = new Clump(this.attribs.QualitiesAffected || [], QualityEffect, this);
-	this.interactions = new Clump(this.attribs.ChildBranches|| [], Interaction, this);
+	api = theApi;
 
-	this.linkToEvent = this.getOrCreate(Event, this.attribs.LinkToEvent, this);
+	this.qualitiesRequired = new Clump(this.attribs.QualitiesRequired || [], api.types.QualityRequirement, this);
+	this.qualitiesAffected = new Clump(this.attribs.QualitiesAffected || [], api.types.QualityEffect, this);
+	this.interactions = new Clump(this.attribs.ChildBranches|| [], api.types.Interaction, this);
 
-	this.limitedToArea = this.getOrCreate(Area, this.attribs.LimitedToArea, this);
+	this.linkToEvent = api.getOrCreate(api.types.Event, this.attribs.LinkToEvent, this);
 
-	Lump.prototype.wireUp.call(this);
+	this.limitedToArea = api.getOrCreate(api.types.Area, this.attribs.LimitedToArea, this);
+
+	Lump.prototype.wireUp.call(this, api);
 };
 
 Event.prototype.toString = function(long) {
@@ -93,7 +100,7 @@ Event.prototype.toDom = function(size, includeChildren) {
 				var interactions = self.interactions;
 				var linkToEvent = self.linkToEvent;
 				if(linkToEvent) {
-					var wrapperClump = new Clump([linkToEvent], Event);
+					var wrapperClump = new Clump([linkToEvent], api.types.Event);
 					var linkToEvent_element = wrapperClump.toDom("normal", true);
 
 					linkToEvent_element.classList.add("child-list");

@@ -1,3 +1,8 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+
+var api;
+
 function Exchange(raw, parent) {
 	this.straightCopy = [
 		'Id',
@@ -12,11 +17,13 @@ function Exchange(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { Exchange.prototype[member] = Lump.prototype[member]; });
 
-Exchange.prototype.wireUp = function() {
+Exchange.prototype.wireUp = function(theApi) {
 
-	this.shops = new Clump(this.attribs.Shops || [], Shop, this);
+	api = theApi;
+
+	this.shops = new Clump(this.attribs.Shops || [], api.types.Shop, this);
 	var self = this;
-	this.ports = all.Port.query("SettingId", function(id) {
+	this.ports = api.library.Port.query("SettingId", function(id) {
 		return self.SettingIds.indexOf(id) !== -1;
 	});
 	this.ports.forEach(function (p) {

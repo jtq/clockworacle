@@ -14,11 +14,12 @@
   "devDependencies": {
     "jquery": "latest",
     "jshint": "latest",
-    "mocha": "latest"
+    "browserify": "latest",
+    "jasmine": "latest"
   },
   "scripts": {
-    "lint": "jshint src/ test/",
-    "test": "mocha --recursive test/",
+    "lint": "jshint src/ spec/",
+    "test": "jasmine",
     "env": "env"
   }
 }

@@ -1,3 +1,10 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+var Port = require('./port');
+var Area = require('./area');
+
+var api;
+
 function TileVariant(raw, parent) {
 	this.straightCopy = [
 		'Name',
@@ -32,12 +39,14 @@ Weather: Array[1]
 }
 Object.keys(Lump.prototype).forEach(function(member) { TileVariant.prototype[member] = Lump.prototype[member]; });
 
-TileVariant.prototype.wireUp = function() {
+TileVariant.prototype.wireUp = function(theApi) {
 
-	this.ports.forEach(function(p) { p.wireUp(); });
+	api = theApi;
+
+	this.ports.forEach(function(p) { p.wireUp(api); });
 
 	// Also create a list of all the areas of each of the ports in this object for convenience
-	this.areas = new Clump(this.ports.map(function(p) { return p.area; }), Area, this);
+	this.areas = new Clump(this.ports.map(function(p) { return p.area; }), api.types.Area, this);
 
 	Lump.prototype.wireUp.call(this);
 };

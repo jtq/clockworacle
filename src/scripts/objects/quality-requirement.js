@@ -1,23 +1,33 @@
+var Lump = require('./lump');
+
+var api;
+
 function QualityRequirement(raw, parent) {
 	this.straightCopy = ['MinLevel', 'MaxLevel'];
 	Lump.apply(this, arguments);
 
-	this.difficultyAdvanced = this.describeAdvancedExpression(raw.DifficultyAdvanced);
-	this.minAdvanced = this.describeAdvancedExpression(raw.MinAdvanced);
-	this.maxAdvanced = this.describeAdvancedExpression(raw.MaxAdvanced);
+	this.difficultyAdvanced = null;
+	this.minAdvanced = null;
+	this.maxAdvanced = null;
 
 	this.associatedQuality = null;
 	this.chanceQuality = null;
 }
 Object.keys(Lump.prototype).forEach(function(member) { QualityRequirement.prototype[member] = Lump.prototype[member]; });
 
-QualityRequirement.prototype.wireUp = function() {
+QualityRequirement.prototype.wireUp = function(theApi) {
 
-	this.associatedQuality = this.get(Quality, this.attribs.AssociatedQualityId, this);
+	api = theApi;
+
+	this.difficultyAdvanced = api.describeAdvancedExpression(this.attribs.DifficultyAdvanced);
+	this.minAdvanced = api.describeAdvancedExpression(this.attribs.MinAdvanced);
+	this.maxAdvanced = api.describeAdvancedExpression(this.attribs.MaxAdvanced);
+
+	this.associatedQuality = api.get(api.types.Quality, this.attribs.AssociatedQualityId, this);
 
 	this.chanceQuality = this.getChanceCap();
 
-	Lump.prototype.wireUp.call(this);
+	Lump.prototype.wireUp.call(this, api);
 };
 
 QualityRequirement.prototype.getChanceCap = function() {

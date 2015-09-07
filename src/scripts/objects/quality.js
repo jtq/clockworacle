@@ -1,3 +1,8 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+
+var api;
+
 function Quality(raw, parent) {
 	this.straightCopy = [
 		'Name',
@@ -27,14 +32,16 @@ function Quality(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { Quality.prototype[member] = Lump.prototype[member]; });
 
-Quality.prototype.wireUp = function() {
+Quality.prototype.wireUp = function(theApi) {
 
-	this.useEvent = this.getOrCreate(Event, this.attribs.UseEvent, this);
+	api = theApi;
+
+	this.useEvent = api.getOrCreate(api.types.Event, this.attribs.UseEvent, this);
 	if(this.useEvent) {
 		this.useEvent.tag = "use";
 	}
 
-	Lump.prototype.wireUp.call(this);
+	Lump.prototype.wireUp.call(this, api);
 };
 
 Quality.prototype.toString = function(long) {
@@ -72,7 +79,7 @@ Quality.prototype.toDom = function(size, includeChildren, tag) {
 			else {
 				if(self.useEvent) {
 
-					var wrapperClump = new Clump([self.useEvent], Event);
+					var wrapperClump = new Clump([self.useEvent], api.types.Event);
 					var child_events = wrapperClump.toDom(size, true);
 
 					child_events.classList.add("child-list");

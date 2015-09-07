@@ -1,8 +1,9 @@
+
 function Clump(raw, Type, parent) {
 	this.type = Type;
 	this.items = {};
 	var self = this;
-	raw.forEach(function(item, index, all) {
+	raw.forEach(function(item, index, collection) {
 		if(!(item instanceof Type)) {
 			item = new Type(item, parent);
 		}
@@ -222,7 +223,7 @@ Clump.prototype.queryRaw = function(field, value) {
 		};
 	}
 	
-	// Now iterate over the all, filtering using the test function we defined
+	// Now iterate over them all, filtering using the test function we defined
 	this.forEach(function(item) {
 		if(
 			(field !== null && test(item.attribs[field])) ||

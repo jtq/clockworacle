@@ -1,3 +1,8 @@
+var Lump = require('./lump');
+var Clump = require('./clump');
+
+var api;
+
 function SpawnedEntity(raw, parent) {
 	this.straightCopy = [
 		'Name',
@@ -29,28 +34,31 @@ function SpawnedEntity(raw, parent) {
 }
 Object.keys(Lump.prototype).forEach(function(member) { SpawnedEntity.prototype[member] = Lump.prototype[member]; });
 
-SpawnedEntity.prototype.wireUp = function() {
+SpawnedEntity.prototype.wireUp = function(theApi) {
+
+	api = theApi;
 
 	var self = this;
+	
 	this.combatAttackNames = (this.attribs.CombatAttackNames || []).map(function(name) {
-		return self.get(CombatAttack, name, self);
+		return api.get(api.types.CombatAttack, name, self);
 	}).filter(function(attack) {
 		return typeof attack === "object";
 	});
 
-	this.pacifyEvent = this.get(Event, this.attribs.PacifyEventId, this);
+	this.pacifyEvent = api.get(api.types.Event, this.attribs.PacifyEventId, this);
 	if(this.pacifyEvent) {
 		this.pacifyEvent.tag = "pacified";
 	}
 
-	this.killQualityEvent = this.get(Event, this.attribs.KillQualityEventId, this);
+	this.killQualityEvent = api.get(api.types.Event, this.attribs.KillQualityEventId, this);
 	if(this.killQualityEvent) {
 		this.killQualityEvent.tag = "killed";
 	}
 
 	this.image = ((this.killQualityEvent && this.killQualityEvent.Image) || (this.pacifyEvent && this.pacifyEvent.Image));
 
-	Lump.prototype.wireUp.call(this);
+	Lump.prototype.wireUp.call(this, api);
 };
 
 SpawnedEntity.prototype.toString = function() {
@@ -114,7 +122,7 @@ SpawnedEntity.prototype.toDom = function(size, includeChildren) {
 					events.push(defaultEvent);
 				}
 				if(events.length) {
-					var wrapperClump = new Clump(events, Event);
+					var wrapperClump = new Clump(events, api.types.Event);
 					var child_events = wrapperClump.toDom(size, true);
 
 					child_events.classList.add("child-list");

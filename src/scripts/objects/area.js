@@ -1,3 +1,5 @@
+var Lump = require('./lump');
+
 function Area(raw) {
 	this.straightCopy = ["Name", "Description", "ImageName", "MoveMessage"];
 	Lump.call(this, raw);
