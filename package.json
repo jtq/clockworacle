@@ -18,6 +18,7 @@
     "jasmine": "latest"
   },
   "scripts": {
+    "build": "browserify src/**/*.js -o build/compiled.js --debug",
     "lint": "jshint src/ spec/",
     "test": "jasmine",
     "env": "env"
