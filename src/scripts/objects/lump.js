@@ -1,6 +1,8 @@
 var library = require('../library');
 var Clump = require('./clump');
 
+var api;
+
 function Lump(raw, parent) {
 	if(parent) {
 		this.parents = parent instanceof Array ? parent : [parent];
@@ -34,7 +36,8 @@ function Lump(raw, parent) {
 }
 
 Lump.prototype = {
-	wireUp: function(library) {
+	wireUp: function(theApi) {
+		api = theApi;
 		this.wired = true;
 	},
 

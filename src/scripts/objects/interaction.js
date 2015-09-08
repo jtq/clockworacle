@@ -54,7 +54,7 @@ Interaction.prototype.toDom = function(size, includeChildren) {
 	element.className = "item "+this.constructor.name.toLowerCase()+"-item "+size;
 
 	if(this.Image !== null && this.Image !== "") {
-		html = "<img class='icon' src='file:///C:/Users/James/AppData/LocalLow/Failbetter Games/Sunless Sea/images/sn/icons/"+this.Image+"small.png' />";
+		html = "<img class='icon' src='"+api.config.imagesPath+"/"+this.Image+"small.png' />";
 	}
 
 	html += "\n<h3 class='title'>"+this.Name+"</h3>";
