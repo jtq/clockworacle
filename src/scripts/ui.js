@@ -1,4 +1,4 @@
-var config =require('../../config');
+var config =require('../../config.json');
 var api = require('./sunless-sea');
 
 var library = require('./library');

@@ -1,4 +1,4 @@
-var config =require('../../config');
+var config =require('../../config.json');
 var Clump = require('./objects/clump');
 var Lump = require('./objects/lump');
 

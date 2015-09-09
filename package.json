@@ -15,10 +15,14 @@
     "jquery": "latest",
     "jshint": "latest",
     "browserify": "latest",
-    "jasmine": "latest"
+    "jasmine": "latest",
+    "render-cli": "latest"
   },
   "scripts": {
-    "build": "browserify src/**/*.js -o build/compiled.js --debug",
+    "build": "npm run compilecss && npm run compilejs && npm run compilehtml",
+      "compilecss": "cp src/styles/sunless-sea.css build/sunless-sea.css",
+      "compilejs": "browserify src/**/*.js -o build/sunless-sea.js --debug",
+      "compilehtml": "render src/markup/index.handlebars --context config.json -o build/index.html",
     "lint": "jshint src/ spec/",
     "test": "jasmine",
     "env": "env"
