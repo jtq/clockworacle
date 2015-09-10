@@ -19,10 +19,10 @@
     "render-cli": "latest"
   },
   "scripts": {
-    "build": "npm run compilecss && npm run compilejs && npm run compilehtml",
-      "compilecss": "cp src/styles/sunless-sea.css build/sunless-sea.css",
-      "compilejs": "browserify src/**/*.js -o build/sunless-sea.js --debug",
-      "compilehtml": "render src/markup/index.handlebars --context config.json -o build/index.html",
+    "build-ui": "npm run compilecss && npm run compilejs && npm run compilehtml",
+      "compilecss": "cp src/styles/sunless-sea.css build/ui/sunless-sea.css",
+      "compilejs": "browserify src/**/*.js -o build/ui/sunless-sea.js --debug",
+      "compilehtml": "render src/templates/index.html.handlebars --context config.json -o build/ui/index.html",
     "lint": "jshint src/ spec/",
     "test": "jasmine",
     "env": "env"

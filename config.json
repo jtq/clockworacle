@@ -1,4 +1,5 @@
 {
 	"title": "Sunless Sea",
-	"imagesPath": "../game-data/icons"
+	"imagesPath": "../../game-data/icons",
+	"baseId": 415000
 }
