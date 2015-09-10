@@ -76,6 +76,16 @@ function getOrCreate(Type, possNewThing, parent) {	// If an object already exist
 	}
 }
 
+var whatIs = function(id) {
+  var possibilities = [];
+  Object.keys(library).forEach(function(key) {
+    if(library[key] instanceof Clump && library[key].id(id)) {
+      possibilities.push(key);
+    }
+  });
+  return possibilities;
+};
+
 function describeAdvancedExpression(expr) {
 	var self = this;
 	if(expr) {
@@ -99,6 +109,7 @@ module.exports = {
 	'library': library,
 	'loaded': loaded,
 	'get': get,
+	'whatIs': whatIs,
 	'getOrCreate': getOrCreate,
 	'describeAdvancedExpression': describeAdvancedExpression
 };
