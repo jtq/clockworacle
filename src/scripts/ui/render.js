@@ -1,4 +1,4 @@
-var api = require('../sunless-sea');
+var api = require('../api');
 
 function renderLists() {
   Object.keys(api.loaded).forEach(function(type) {

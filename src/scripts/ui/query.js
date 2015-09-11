@@ -1,4 +1,4 @@
-var api = require('../sunless-sea');
+var api = require('../api');
 var Clump = require('../objects/clump');
 
 function RouteNode(node) {
