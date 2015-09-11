@@ -76,6 +76,18 @@ function getOrCreate(Type, possNewThing, parent) {	// If an object already exist
 	}
 }
 
+function wireUpObjects() {
+	var api = this;
+  Object.keys(types).forEach(function(type) {
+    console.log("Wired up "+type);
+    library[type].forEach(function(lump) {
+      if(lump.wireUp) {
+        lump.wireUp(api);
+      }
+    });
+  });
+}
+
 var whatIs = function(id) {
   var possibilities = [];
   Object.keys(library).forEach(function(key) {
@@ -110,6 +122,7 @@ module.exports = {
 	'loaded': loaded,
 	'get': get,
 	'whatIs': whatIs,
+	'wireUpObjects': wireUpObjects,
 	'getOrCreate': getOrCreate,
 	'describeAdvancedExpression': describeAdvancedExpression
 };

@@ -1,5 +1,6 @@
 var api = require('../sunless-sea');
 var Clump = require('../objects/clump');
+var render = require('./render');
 
 var files_to_load;
 
@@ -71,36 +72,12 @@ function readSingleFile(file, typeName) {
     files_to_load--;
 
     if(files_to_load === 0) {
-      wireUpObjects();
-      renderLists();
+      api.wireUpObjects();
+      render.lists();
     }
 
   };
   reader.readAsText(file);
-}
-
-function wireUpObjects() {
-  Object.keys(api.types).forEach(function(type) {
-    console.log("Wired up "+type);
-    api.library[type].forEach(function(lump) {
-      if(lump.wireUp) {
-        lump.wireUp(api);
-      }
-    });
-  });
-}
-
-function renderLists() {
-  Object.keys(api.loaded).forEach(function(type) {
-    renderList(api.loaded[type]); // Only display directly loaded (root-level) Lumps, to prevent the list becoming unwieldy
-  });
-}
-
-function renderList(clump) {
-	var root = document.getElementById(clump.type.name.toLowerCase()+"-list");
-  if(root) {
-	 root.appendChild(clump.toDom());
-  }
 }
 
 module.exports = {
