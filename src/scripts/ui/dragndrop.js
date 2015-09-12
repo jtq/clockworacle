@@ -1,5 +1,6 @@
 var api = require('../api');
 var Clump = require('../objects/clump');
+var io = require('../io');
 
 var render = require('./render');
 
@@ -21,16 +22,6 @@ function handleDragDrop(evt) {
 
   $("#drop-zone").removeClass("drop-target");
 
-  var fileObjectMap = {
-    'events.json' : 'Event',
-    'qualities.json' : 'Quality',
-    'areas.json' : 'Area',
-    'spawnedentities.json' : 'SpawnedEntity',
-    'combatattacks.json' : 'CombatAttack',
-    'exchanges.json' : 'Exchange',
-    'tiles.json': 'Tile'
-  };
-
   evt.stopPropagation();
   evt.preventDefault();
 
@@ -42,7 +33,7 @@ function handleDragDrop(evt) {
   for (var i = 0; i < files.length; i++) {
     var f = files[i];
     var filename = escape(f.name).toLowerCase();
-    var typeName = fileObjectMap[filename];
+    var typeName = io.fileObjectMap[filename];
     var Type = api.types[typeName];
     if(Type) {
       api.incrementFilesToLoad();
