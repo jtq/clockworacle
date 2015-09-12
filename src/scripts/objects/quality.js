@@ -59,7 +59,7 @@ Quality.prototype.toDom = function(size, includeChildren, tag) {
 	var element =  document.createElement(tag);
 	element.className = "item "+this.constructor.name.toLowerCase()+"-item "+size;
 
-	html = "\n<img class='icon' src='"+api.config.imagesPath+"/"+this.Image+"small.png' />";
+	html = "\n<img class='icon' src='"+api.config.locations.imagesPath+"/"+this.Image+"small.png' />";
 	html += "\n<h3 class='title'>"+this.Name+"</h3>";
 	html += "\n<p class='description'>"+this.Description+"</p>";
 

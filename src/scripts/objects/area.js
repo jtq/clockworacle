@@ -25,7 +25,7 @@ Area.prototype.toDom = function(size) {
 	element.className = "item "+this.constructor.name.toLowerCase()+"-item "+size;
 
 	if(this.ImageName !== null && this.Image !== "") {
-		element.innerHTML = "<img class='icon' src='"+api.config.imagesPath+"/"+this.ImageName+".png' />";
+		element.innerHTML = "<img class='icon' src='"+api.config.locations.imagesPath+"/"+this.ImageName+".png' />";
 	}
 
 	element.innerHTML += "\n<h3 class='title'>"+this.Name+"</h3>\n<p class='description'>"+this.Description+"</p>";

@@ -1,5 +1,14 @@
 {
 	"title": "Sunless Sea",
-	"imagesPath": "../../game-data/icons",
+	"paths": {
+		"templates": "src/templates",
+		"builddir": {
+			"mod": "build/mod",
+			"ui": "build/ui"
+		}
+	},
+	"locations": {
+		"imagesPath": "game-data/icons"
+	},
 	"baseId": 415000
 }

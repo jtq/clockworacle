@@ -54,7 +54,7 @@ Interaction.prototype.toDom = function(size, includeChildren) {
 	element.className = "item "+this.constructor.name.toLowerCase()+"-item "+size;
 
 	if(this.Image !== null && this.Image !== "") {
-		html = "<img class='icon' src='"+api.config.imagesPath+"/"+this.Image+"small.png' />";
+		html = "<img class='icon' src='"+api.config.locations.imagesPath+"/"+this.Image+"small.png' />";
 	}
 
 	html += "\n<h3 class='title'>"+this.Name+"</h3>";
