@@ -52,13 +52,17 @@ function loadModTemplates() {
 
 
 function generateJSON() {
-	return {
+	var json = {
+		buildDateTime: new Date().toISOString(),
 		baseId: api.config.baseId
 	};
+	//console.log(json);
+	return json;
 }
 
 function renderTemplates(data) {
-	var qualityTemplate = Handlebars.compile(templates.qualities);
-
-	fs.writeFileSync(config.paths.builddir.mod+'/qualities.json', qualityTemplate(data), { encoding:'utf8' });
+	var qualitiesTemplate = Handlebars.compile(templates.qualities);
+	var eventsTemplate = Handlebars.compile(templates.events);
+	fs.writeFileSync(config.paths.builddir.mod+'/qualities.json', qualitiesTemplate(data), { encoding:'utf8' });
+	fs.writeFileSync(config.paths.builddir.mod+'/events.json', eventsTemplate(data), { encoding:'utf8' });
 }
