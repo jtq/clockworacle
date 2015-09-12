@@ -17,6 +17,7 @@
     "browserify": "latest",
     "jasmine": "latest",
     "render-cli": "latest",
+    "handlebars": "latest",
     "filereader": "latest",
     "File": "latest"
   },
