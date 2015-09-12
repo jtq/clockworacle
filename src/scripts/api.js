@@ -114,27 +114,11 @@ function describeAdvancedExpression(expr) {
 	return null;
 }
 
-var files_to_load = 0;
-function resetFilesToLoad() {
-	files_to_load = 0;
-}
-function incrementFilesToLoad() {
-	files_to_load++;
-}
-function decrementFilesToLoad() {
-	files_to_load--;
-}
-function countFilesToLoad() {
-	return files_to_load;
-}
-
 function readFromFile(Type, file, callback) {
 	io.readFile(file, function (e) {
     var contents = e.target.result;
     
     var obj = JSON.parse(contents);
-    console.log("Loaded "+Type.prototype.constructor.name);
-    
     loaded[Type.prototype.constructor.name] = new Clump(obj, Type);
 
     callback(contents, Type, loaded[Type.prototype.constructor.name]);
@@ -154,9 +138,5 @@ module.exports = {
 	'wireUpObjects': wireUpObjects,
 	'getOrCreate': getOrCreate,
 	'describeAdvancedExpression': describeAdvancedExpression,
-	'resetFilesToLoad': resetFilesToLoad,
-	'incrementFilesToLoad': incrementFilesToLoad,
-	'decrementFilesToLoad': decrementFilesToLoad,
-	'countFilesToLoad': countFilesToLoad,
 	'readFromFile': readFromFile
 };

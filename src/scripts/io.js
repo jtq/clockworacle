@@ -7,10 +7,10 @@ var fileObjectMap = {
     'events.json' : 'Event',
     'qualities.json' : 'Quality',
     'areas.json' : 'Area',
-    'spawnedentities.json' : 'SpawnedEntity',
-    'combatattacks.json' : 'CombatAttack',
+    'SpawnedEntities.json' : 'SpawnedEntity',
+    'CombatAttacks.json' : 'CombatAttack',
     'exchanges.json' : 'Exchange',
-    'tiles.json': 'Tile'
+    'Tiles.json': 'Tile'
   };
 
 function readFile(file, callback) {
@@ -19,7 +19,26 @@ function readFile(file, callback) {
   reader.readAsText(file);
 }
 
+var files_to_load = 0;
+function resetFilesToLoad() {
+	files_to_load = 0;
+}
+function incrementFilesToLoad() {
+	files_to_load++;
+}
+function decrementFilesToLoad() {
+	files_to_load--;
+}
+function countFilesToLoad() {
+	return files_to_load;
+}
+
+
 module.exports = {
   readFile: readFile,
+  resetFilesToLoad: resetFilesToLoad,
+	incrementFilesToLoad: incrementFilesToLoad,
+	decrementFilesToLoad: decrementFilesToLoad,
+	countFilesToLoad: countFilesToLoad,
   fileObjectMap: fileObjectMap
 };

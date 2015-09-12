@@ -29,18 +29,18 @@ function handleDragDrop(evt) {
 
   // Files is a FileList of File objects. List some properties.
   var output = [];
-  api.resetFilesToLoad();
+  io.resetFilesToLoad();
   for (var i = 0; i < files.length; i++) {
     var f = files[i];
-    var filename = escape(f.name).toLowerCase();
+    var filename = escape(f.name);
     var typeName = io.fileObjectMap[filename];
     var Type = api.types[typeName];
     if(Type) {
-      api.incrementFilesToLoad();
+      io.incrementFilesToLoad();
       api.readFromFile(Type, f, function() {
-        api.decrementFilesToLoad();
+        io.decrementFilesToLoad();
 
-        if(api.countFilesToLoad() === 0) {
+        if(io.countFilesToLoad() === 0) {
           api.wireUpObjects();
           render.lists();
         }
