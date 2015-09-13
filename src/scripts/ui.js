@@ -1,3 +1,4 @@
+var api = require('./api');
 var dragndrop = require('./ui/dragndrop');
 var query = require('./ui/query');
 
@@ -24,3 +25,5 @@ dropZone.addEventListener('drop', dragndrop.handlers.dragDrop, false);
 
 document.getElementById('paths-to-node').addEventListener('click', query.pathsToNode, false);
 
+// For convenience
+window.api = api;

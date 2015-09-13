@@ -1,6 +1,6 @@
 [
   {
-    "Id": 415100,
+    "Id": {{baseGameIds.event}},
     "Name": "The Clockwork Oracle",
     "Teaser": "Knowledge is power, but ignorance is bliss...",
     "Image": "mechanism",
@@ -17,14 +17,14 @@
         "MinAdvanced": null,
         "MaxAdvanced": null,
         "AssociatedQuality": null,
-        "AssociatedQualityId": 415000,
+        "AssociatedQualityId": {{baseGameIds.quality}},
         "QualityName": null,
         "QualityDescription": null,
         "QualityImage": null,
         "QualityNature": null,
         "QualityCategory": null,
         "QualityAllowedOn": null,
-        "Id": 415000
+        "Id": {{increment "event"}}
       }
     ],
     "Tag": null,
@@ -84,7 +84,7 @@
     },
     "ChildBranches": [
       {
-        "Id": 415110,
+        "Id": {{bumpToNext "event" 10}},
         "Name": "Examine the machine more closely",
         "Description": "But not <i>too</i> closely, eh?",
         "SuccessEvent": null,
@@ -105,7 +105,7 @@
         "Act": null,
         "Archived": false,
         "DefaultEvent": {
-          "Id": 415111,
+          "Id": {{increment "event"}},
           "Name": "You lean closer, and peer at the device",
           "Teaser": "",
           "Description": "The casing seems to be mostly made of some unknown metal, but other parts are glass, or crystal.  Peering through a dim inspection window some components even look organic, while others appear to refract light wrongly or even flicker in and out of existence altogether.  A large brass key projects from the side, covered in delicate carvings of figures doing things you'd really rather not examine too closely.  On the front a dented gold plaque bears the legend \"Quid nosti melius vobis noceat\".<br /><br />Gizmologists and occultarians debate its method of operation; some believe it contains a captured panopticist demon, others that its intricate clockwork encodes a capricious intelligence.  Some even assert that it somehow directly reads the Correspondence itself to formulate its answers, with all of the unearthly danger that implies.<br /><br />All that is generally known for certain is that its pronouncements (while vague) are almost always completely accurate... and that after taking its advice generations of zee-captains have confidently sailed off to their doom.",
@@ -144,12 +144,12 @@
           "Autofire": true,
           "CanGoBack": false,
           "LinkToEvent": {
-            "Id": 415100
+            "Id": {{baseGameIds.event}}
           }
         }
       },
       {
-        "Id": 415120,
+        "Id": {{bumpToNext "event" 10}},
         "Name": "Consult the infernal device",
         "Description": "It knows many things, but which will it reveal?  And why?",
         "SuccessEvent": null,
@@ -170,16 +170,16 @@
         "Act": null,
         "Archived": false,
         "DefaultEvent": {
-          "Id": 415121,
+          "Id": {{increment "event"}},
           "LinkToEvent": {
-            "Id": 415200
+            "Id": {{bumpToNext "event" 100}}
           }
         }
       }
     ]
   },
   {
-    "Id": 415200,
+    "Id": {{id "event"}},
     "Name": "What would you like to do?",
     "Teaser": "",
     "Description": "The machine gurgles to itself, reflectively.  Relays close deep within its innards, and a smell of ozone and brimstone fills the cabin.  With a hiss a tray of neatly-labelled levers emerges from a panel on the front.",
@@ -244,7 +244,7 @@
     "LinkToEvent": null,
     "ChildBranches": [
       {
-        "Id": 415210,
+        "Id": {{bumpToNext "event" 10}},
         "Name": "\"To Acquire\"",
         "Description": "Desire is the root of all suffering.  What could possibly go wrong?",
         "SuccessEvent": null,
@@ -265,15 +265,15 @@
         "Act": null,
         "Archived": false,
         "DefaultEvent": {
-          "Id": 415211,
+          "Id": {{increment "event"}},
           "Description": "",
           "LinkToEvent": {
-            "Id": 415300
+            "Id": {{baseGameIds.acquire}}
           }
         }
       },
       {
-        "Id": 415220,
+        "Id": {{bumpToNext "event" 10}},
         "Name": "\"To Learn\"",
         "Description": "Knowledge is power, but power corrupts...",
         "SuccessEvent": null,
@@ -294,15 +294,15 @@
         "Act": null,
         "Archived": false,
         "DefaultEvent": {
-          "Id": 415221,
+          "Id": {{increment "event"}},
           "Description": "",
           "LinkToEvent": {
-            "Id": 415400
+            "Id": {{baseGameIds.learn}}
           }
         }
       },
       {
-        "Id": 415230,
+        "Id": {{bumpToNext "event" 10}},
         "Name": "\"To Suffer\"",
         "Description": "That which does not kill us makes us stronger.  Or merely eternally regretful.",
         "SuccessEvent": null,
@@ -323,15 +323,15 @@
         "Act": null,
         "Archived": false,
         "DefaultEvent": {
-          "Id": 415231,
+          "Id": {{increment "event"}},
           "Description": "",
           "LinkToEvent": {
-            "Id": 415500
+            "Id": {{baseGameIds.suffer}}
           }
         }
       },
       {
-        "Id": 415240,
+        "Id": {{bumpToNext "event" 10}},
         "Name": "\"To Become\"",
         "Description": "We may not evolve without abandoning our self.  Change is death.",
         "SuccessEvent": null,
@@ -352,17 +352,17 @@
         "Act": null,
         "Archived": false,
         "DefaultEvent": {
-          "Id": 415241,
+          "Id": {{increment "event"}},
           "Description": "",
           "LinkToEvent": {
-            "Id": 415600
+            "Id": {{baseGameIds.become}}
           }
         }
       }
     ]
   },
   {
-    "Id": 415300,
+    "Id": {{baseGameIds.acquire}},
     "Name": "\"I desire material goods\"",
     "Teaser": "",
     "Description": "The Clockwork Oracle whirrs solicitously.  A panel rotates, to reveal directions.<br /><br/>\"Speak aloud your heart's desire.\"",
@@ -426,79 +426,11 @@
     "CanGoBack": false,
     "LinkToEvent": null,
     "ChildBranches": [
-      {
-        "Id": 415301,
-        "Name": "\"Bolts of Spider-Silk\"",
-        "Description": "Soft as silence.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "spidersilk",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 0,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      },
-      {
-        "Id": 415302,
-        "Name": "\"Crate of Human Souls\"",
-        "Description": "Clinking, glowing, pleading.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "bottledsoulwhite",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 1,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      },
-      {
-        "Id": 415303,
-        "Name": "\"Firkin of Prisoner's Honey\"",
-        "Description": "A hundred dreams in every barrel.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "barrel",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 2,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      }
+      {{{eventAcquireChildren}}}
     ]
   },
   {
-    "Id": 415400,
+    "Id": {{baseGameIds.learn}},
     "Name": "\"I desire to know\"",
     "Teaser": "",
     "Description": "There is an sudden silence, as the machine stops dead.<br /><br />After a long and pregnant pause, a card slides ominously from the a slot on the front faceplate.<br /><br /><code>\"What would you like to know?\"</code>",
@@ -562,79 +494,11 @@
     "CanGoBack": false,
     "LinkToEvent": null,
     "ChildBranches": [
-      {
-        "Id": 415401,
-        "Name": "\"A Memory of Distant Shores\"",
-        "Description": "At the University and in the tomb-colonies, they'll pay well for stories of far lands...",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 0,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      },
-      {
-        "Id": 415402,
-        "Name": "\"A Zee-ztory\"",
-        "Description": "Strange truths are told of the waves and what lies beneath. The lies are even stranger.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 1,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      },
-      {
-        "Id": 415403,
-        "Name": "\"A Secret\"",
-        "Description": "The root of all good.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 2,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      }
+      {{{eventLearnChildren}}}
     ]
   },
   {
-    "Id": 415500,
+    "Id": {{baseGameIds.suffer}},
     "Name": "\"I desire to suffer\"",
     "Teaser": "",
     "Description": "The clicking increases in tempo.  The Oracle exudes an air of lip-licking anticipation.  It is evidently pleased at the thought.",
@@ -698,79 +562,11 @@
     "CanGoBack": false,
     "LinkToEvent": null,
     "ChildBranches": [
-      {
-        "Id": 415501,
-        "Name": "\"Menaces: A Recurring Nightmare\"",
-        "Description": "",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 0,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      },
-      {
-        "Id": 415502,
-        "Name": "\"Menaces: Soulless\"",
-        "Description": "If you'd never had it, you'd never miss it.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 1,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      },
-      {
-        "Id": 415503,
-        "Name": "\"Menaces: Wounds\"",
-        "Description": "It stings rather.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 2,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      }
+      {{{eventSufferChildren}}}
     ]
   },
   {
-    "Id": 415600,
+    "Id": {{baseGameIds.become}},
     "Name": "\"I desire to become\"",
     "Teaser": "",
     "Description": "Change is eternal.  Every instant brings a new you, and the death of the old.  Who will you be tomorrow?  And who will mourn the holocaust it took to reach today?",
@@ -834,75 +630,7 @@
     "CanGoBack": false,
     "LinkToEvent": null,
     "ChildBranches": [
-      {
-        "Id": 415601,
-        "Name": "\"Iron\"",
-        "Description": "DESTROY. Increases the damage your attacks do.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 0,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      },
-      {
-        "Id": 415602,
-        "Name": "\"Mirrors\"",
-        "Description": "Detection and perception. The higher your Mirrors, the quicker you can find a firing solution in combat.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 1,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      },
-      {
-        "Id": 415603,
-        "Name": "\"Veils\"",
-        "Description": "Speed, stealth, deception. Decreases the range at which enemies will spot you.",
-        "SuccessEvent": null,
-        "RareDefaultEvent": null,
-        "RareDefaultEventChance": 19,
-        "RareSuccessEvent": null,
-        "RareSuccessEventChance": 0,
-        "ParentEvent": null,
-        "QualitiesRequired": [],
-        "Image": "",
-        "OwnerName": null,
-        "DateTimeCreated": "{{buildDateTime}}",
-        "CurrencyCost": 0,
-        "ActionCost": 1,
-        "RenameQualityCategory": null,
-        "ButtonText": "",
-        "Ordering": 2,
-        "Act": null,
-        "Archived": false,
-        "DefaultEvent": null
-      }
+      {{{eventBecomeChildren}}}
     ]
   }
 ]

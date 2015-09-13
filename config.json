@@ -10,5 +10,12 @@
 	"locations": {
 		"imagesPath": "../../game-data/icons"
 	},
-	"baseId": 415000
+	"baseGameIds": {
+		"quality": 415000,
+		"event": 416000,
+		"acquire": 416200,
+		"learn": 416300,
+		"suffer": 416400,
+		"become": 416500
+	}
 }
