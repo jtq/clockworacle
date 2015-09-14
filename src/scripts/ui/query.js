@@ -60,7 +60,7 @@ function pathsToNode(node, seen, parent) {
     return false;
   }
 
-  var ancestry = jQuery.extend({}, seen);
+  var ancestry = JSON.parse(JSON.stringify(seen));
   ancestry[node.Id] = true;
 
   var this_node = new RouteNode(/*node.linkToEvent ? node.linkToEvent :*/ node); // If this node is just a link to another one, skip over the useless link
@@ -107,7 +107,7 @@ function pathsToNode(node, seen, parent) {
 
 function filterPathsToNode(routes, operation) {
   // Filter routes by operation
-  if(operation !== "any") {
+  if(routes && routes.children && operation !== "any") {
     routes.children = routes.children.filter(function(route_node) {
 
       lump = route_node.node;
