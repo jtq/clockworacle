@@ -23,7 +23,7 @@ dropZone.addEventListener('dragover', dragndrop.handlers.dragOver, false);
 
 dropZone.addEventListener('drop', dragndrop.handlers.dragDrop, false);
 
-document.getElementById('paths-to-node').addEventListener('click', query.pathsToNode, false);
+document.getElementById('paths-to-node').addEventListener('click', query.pathsToNodeUI, false);
 
 // For convenience
 window.api = api;

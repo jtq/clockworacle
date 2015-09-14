@@ -6,7 +6,7 @@ function RouteNode(node) {
   this.children = [];
 }
 
-function pathsToNode() {
+function pathsToNodeUI() {
 
   var type = document.getElementById('type');
   type = type.options[type.selectedIndex].value;
@@ -32,34 +32,17 @@ function pathsToNode() {
 
   var title = $('.pane.query .pane-title').text("Query: "+item.toString());
 
-  var routes = pathsToNode_Recurse(item, {});
-
-  console.log("All routes", routes);
+  var routes = pathsToNode(item, {});
 
   if(routes && routes.children.length) {
 
-    // Filter routes by operation
-    if(operation !== "any") {
-      routes.children = routes.children.filter(function(route_node) {
-
-        lump = route_node.node;
-
-        if(operation === "additive") {
-          return lump.isOneOf([api.types.QualityEffect, api.types.Availability]) && lump.isAdditive();
-        }
-        else if(operation === "subtractive") {
-          return lump.isOneOf([api.types.QualityEffect, api.types.Availability]) && lump.isSubtractive();
-        }
-      });
-    }
-
-    console.log("Passing routes", routes);
+    routes = filterPathsToNode(routes, operation);
 
     var top_children = document.createElement("ul");
     top_children.className += "clump-list small";
 
     routes.children.forEach(function(child_route) {
-      var tree = pathsToNode_Render(child_route, []);
+      var tree = renderPathsToNode(child_route, []);
       top_children.appendChild(tree);
     });
 
@@ -71,7 +54,7 @@ function pathsToNode() {
   
 }
 
-function pathsToNode_Recurse(node, seen, parent) {
+function pathsToNode(node, seen, parent) {
 
   if(seen[node.Id]) {   // Don't recurse into nodes we've already seen
     return false;
@@ -109,7 +92,7 @@ function pathsToNode_Recurse(node, seen, parent) {
   else {
     for(var i=0; i<node.parents.length; i++) {
       var the_parent = node.parents[i];
-      var subtree = pathsToNode_Recurse(the_parent, ancestry, node);
+      var subtree = pathsToNode(the_parent, ancestry, node);
       if(subtree) {
         this_node.children.push(subtree);
       }
@@ -122,7 +105,26 @@ function pathsToNode_Recurse(node, seen, parent) {
   return this_node;
 }
 
-function pathsToNode_Render(routeNode, ancestry) {
+function filterPathsToNode(routes, operation) {
+  // Filter routes by operation
+  if(operation !== "any") {
+    routes.children = routes.children.filter(function(route_node) {
+
+      lump = route_node.node;
+
+      if(operation === "additive") {
+        return lump.isOneOf([api.types.QualityEffect, api.types.Availability]) && lump.isAdditive();
+      }
+      else if(operation === "subtractive") {
+        return lump.isOneOf([api.types.QualityEffect, api.types.Availability]) && lump.isSubtractive();
+      }
+    });
+  }
+
+  return routes;
+}
+
+function renderPathsToNode(routeNode, ancestry) {
   
   if(!(routeNode instanceof RouteNode)) {
     return null;
@@ -136,7 +138,7 @@ function pathsToNode_Render(routeNode, ancestry) {
   var new_ancestry = ancestry.slice();
   new_ancestry.push(routeNode.node);
   routeNode.children.forEach(function(child_route, index, children) {
-    var child_content = pathsToNode_Render(child_route, new_ancestry);
+    var child_content = renderPathsToNode(child_route, new_ancestry);
     child_list.appendChild(child_content);
   });
 
@@ -145,8 +147,14 @@ function pathsToNode_Render(routeNode, ancestry) {
   }
   else {
     var description = document.createElement("li");
-    description.innerHTML = "HINT: " + describe(new_ancestry);
-    var total_requirements = requirements(new_ancestry);
+    description.innerHTML = '<span class="route-description">HINT: ' + describeRoute(new_ancestry) + '</span>';
+
+    var reqsTitle = document.createElement('h5');
+    reqsTitle.innerHTML = "Requirements";
+    description.appendChild(reqsTitle);
+
+    var total_requirements = renderRouteRequirements(new_ancestry);
+    
     description.appendChild(total_requirements.toDom("small", false));
     element.appendChild(description);
   }
@@ -154,7 +162,7 @@ function pathsToNode_Render(routeNode, ancestry) {
   return element;
 }
 
-function describe(ancestry) {
+function describeRoute(ancestry) {
   var a = ancestry.slice().reverse();
 
   function lower(text) {
@@ -201,7 +209,7 @@ function describe(ancestry) {
   return guide;
 }
 
-function requirements(ancestry) {
+function renderRouteRequirements(ancestry) {
 
   var reqs = {};
 
@@ -232,5 +240,8 @@ function requirements(ancestry) {
 
 module.exports = {
   RouteNode: RouteNode,
-  pathsToNode: pathsToNode
+  pathsToNodeUI: pathsToNodeUI,
+  pathsToNode: pathsToNode,
+  filterPathsToNode: filterPathsToNode,
+  renderPathsToNode: renderPathsToNode
 };
