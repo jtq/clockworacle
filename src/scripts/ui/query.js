@@ -243,5 +243,7 @@ module.exports = {
   pathsToNodeUI: pathsToNodeUI,
   pathsToNode: pathsToNode,
   filterPathsToNode: filterPathsToNode,
-  renderPathsToNode: renderPathsToNode
+  renderPathsToNode: renderPathsToNode,
+  describeRoute: describeRoute,
+  renderRouteRequirements: renderRouteRequirements
 };

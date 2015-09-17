@@ -13,9 +13,9 @@
 	"baseGameIds": {
 		"quality": 415000,
 		"event": 416000,
-		"acquire": 416200,
-		"learn": 416300,
-		"suffer": 416400,
-		"become": 416500
+		"acquire": 417000,
+		"learn": 418000,
+		"suffer": 419000,
+		"become": 419500
 	}
 }

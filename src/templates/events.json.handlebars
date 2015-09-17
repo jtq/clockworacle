@@ -171,6 +171,7 @@
         "Archived": false,
         "DefaultEvent": {
           "Id": {{increment "event"}},
+          "Description": "The machine gurgles to itself, reflectively.  Relays close deep within its innards, and a smell of ozone and brimstone fills the cabin.  With a hiss a tray of neatly-labelled levers emerges from a panel on the front.<br/><br />A plaque on the front reads...",
           "LinkToEvent": {
             "Id": {{bumpToNext "event" 100}}
           }
@@ -182,7 +183,7 @@
     "Id": {{id "event"}},
     "Name": "What would you like to do?",
     "Teaser": "",
-    "Description": "The machine gurgles to itself, reflectively.  Relays close deep within its innards, and a smell of ozone and brimstone fills the cabin.  With a hiss a tray of neatly-labelled levers emerges from a panel on the front.",
+    "Description": "You reach hesitantly for the levers, running your fingers over them.  You can sense the potential within, each pregnant with equal parts mortal danger and seductive augury.<br /><br />Seized with sudden conviction, you reach forward and grasp the one marked...",
     "ParentBranch": null,
     "QualitiesAffected": [],
     "QualitiesRequired": [],
@@ -266,7 +267,7 @@
         "Archived": false,
         "DefaultEvent": {
           "Id": {{increment "event"}},
-          "Description": "",
+          "Description": "The lever is bedecked with ornate carvings - a throng of golden humanoid figures, frantically climbing over each other to reach a metal ingot st the end.<br /><br />You grasp the lever and pull it towards you.  It proves strangely hard to let go.",
           "LinkToEvent": {
             "Id": {{baseGameIds.acquire}}
           }
@@ -295,7 +296,7 @@
         "Archived": false,
         "DefaultEvent": {
           "Id": {{increment "event"}},
-          "Description": "",
+          "Description": "The end of the lever is beautifully sculpted; crisp lines and elegant curves, polished to a nearly mirror-finish.<br /><br />As you look down the lever, however, it... changes.  A patina develops on the metal finish, the lines waver and become blurred, and the shape becomes increasingly irregular.  By the time it joins the body of the machine it is a sickly brown mass; pitted and rusty, with metal flaking onto the desk below.",
           "LinkToEvent": {
             "Id": {{baseGameIds.learn}}
           }
@@ -324,7 +325,7 @@
         "Archived": false,
         "DefaultEvent": {
           "Id": {{increment "event"}},
-          "Description": "",
+          "Description": "The lever is a simple metal rod, completely covered in sharp, hypodermic-like metal needles.<br /><br />It is <i>exceedingly</i> stiff.",
           "LinkToEvent": {
             "Id": {{baseGameIds.suffer}}
           }
@@ -333,7 +334,7 @@
       {
         "Id": {{bumpToNext "event" 10}},
         "Name": "\"To Become\"",
-        "Description": "We may not evolve without abandoning our self.  Change is death.",
+        "Description": "We may not evolve without abandoning who we are.  Change is death.",
         "SuccessEvent": null,
         "RareDefaultEvent": null,
         "RareDefaultEventChance": 19,
@@ -353,7 +354,7 @@
         "Archived": false,
         "DefaultEvent": {
           "Id": {{increment "event"}},
-          "Description": "",
+          "Description": "The lever is engraved with a design of caterpillars. Rising up the lever they form pupae, which split down the middle to reveal... more catepillars.<br /><br />The artist, it appears, has a sense of humour.",
           "LinkToEvent": {
             "Id": {{baseGameIds.become}}
           }
@@ -433,7 +434,7 @@
     "Id": {{baseGameIds.learn}},
     "Name": "\"I desire to know\"",
     "Teaser": "",
-    "Description": "There is an sudden silence, as the machine stops dead.<br /><br />After a long and pregnant pause, a card slides ominously from the a slot on the front faceplate.<br /><br /><code>\"What would you like to know?\"</code>",
+    "Description": "There is an sudden silence, as the machine stops dead.<br /><br />After a long and pregnant pause, a card slides ominously from the a slot on the front faceplate.<br /><br /><code>\"What <i>precisely</i> would you like to know?\"</code>",
     "ParentBranch": null,
     "QualitiesAffected": [],
     "QualitiesRequired": [],
@@ -569,7 +570,7 @@
     "Id": {{baseGameIds.become}},
     "Name": "\"I desire to become\"",
     "Teaser": "",
-    "Description": "Change is eternal.  Every instant brings a new you, and the death of the old.  Who will you be tomorrow?  And who will mourn the holocaust it took to reach today?",
+    "Description": "Change is a constant.  Every instant brings a new you, and the death of the old.  Who will you be tomorrow?  And what will you sacrifice to ensure you reach it?",
     "ParentBranch": null,
     "QualitiesAffected": [],
     "QualitiesRequired": [],
@@ -632,5 +633,6 @@
     "ChildBranches": [
       {{{eventBecomeChildren}}}
     ]
-  }
+  },
+  {{{additionalEvents}}}
 ]

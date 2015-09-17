@@ -4,6 +4,7 @@ var File = require('File');
 var fs = require('fs');
 
 var io = require('../src/scripts/io');
+var query = require('../src/scripts/ui/query');
 
 var Handlebars = require('handlebars');
 
@@ -57,75 +58,166 @@ function generateJSON() {
 		baseGameIds: api.config.baseGameIds
 	};
 
-	json.eventAcquireChildren = generateObjectListFromClump(api.config.baseGameIds.acquire, api.library.Quality.query('Tag', 'Goods'), json);
-	json.eventLearnChildren = generateObjectListFromClump(api.config.baseGameIds.learn, api.library.Quality.query('Tag', 'Knowledge').query('Category', 'Curiosity'), json);
-	json.eventSufferChildren = generateObjectListFromClump(api.config.baseGameIds.suffer, api.library.Quality.query('Tag', 'Menace').query('Nature', 'Status').query('Category', 'Story'), json);
-	json.eventBecomeChildren = generateObjectListFromClump(api.config.baseGameIds.become, api.library.Quality.query('Tag', 'Abilities').query('Category', 'SidebarAbility'), json);
+	var additionalEvents = [];
+
+	var temp;
+
+	temp = generateObjectListFromClump(api.config.baseGameIds.acquire, api.library.Quality.query('Tag', 'Goods'), json);
+	json.eventAcquireChildren = temp.interactions;
+	additionalEvents = additionalEvents.concat(temp.additionalEvents);
+
+	temp = generateObjectListFromClump(api.config.baseGameIds.learn, api.library.Quality.query('Tag', 'Knowledge').query('Category', 'Curiosity'), json);
+	json.eventLearnChildren = temp.interactions;
+	additionalEvents = additionalEvents.concat(temp.additionalEvents);
+
+	temp = generateObjectListFromClump(api.config.baseGameIds.suffer, api.library.Quality.query('Tag', 'Menace').query('Nature', 'Status').query('Category', 'Story'), json);
+	json.eventSufferChildren = temp.interactions;
+	additionalEvents = additionalEvents.concat(temp.additionalEvents);
+	
+	temp = generateObjectListFromClump(api.config.baseGameIds.become, api.library.Quality.query('Tag', 'Abilities').query('Category', 'SidebarAbility'), json);
+	json.eventBecomeChildren = temp.interactions;
+	additionalEvents = additionalEvents.concat(temp.additionalEvents);
+		
+	json.additionalEvents = additionalEvents;
 
 	return json;
 }
 
 function generateObjectListFromClump(baseId, clump, data) {
 	var Type = clump.type;
-	var rendered = [];
+	var interactions = [];
+	var additionalEvents = [];
 
 	var newItemId = baseId;
 
-	var template = fs.readFileSync(config.paths.templates+'/objects/interaction.handlebars', { encoding:'utf8' });
-	var childTemplate;
+	var interactionTemplate = Handlebars.compile(fs.readFileSync(config.paths.templates+'/objects/interaction.handlebars', { encoding:'utf8' }));
+	var eventTemplate = Handlebars.compile(fs.readFileSync(config.paths.templates+'/objects/event.handlebars', { encoding:'utf8' }));
 
-	clump.forEach(function(item, id, collection) {
+	var chosenQualityEvents = [];
+
+	clump.forEach(function(quality, id, collection) {
 
 		// Quality interaction object
-		item.Id = ++newItemId;	// Id of this new item, not the Id of the existing game-item it relates to
-		item.Name = prepareString(item.Name);
-		item.Description = prepareString(item.Description);
-		item.buildDateTime = data.buildDateTime;
+		quality.Id = ++newItemId;	// Id of this new item, not the Id of the existing game-item it relates to
+		var defaultEventId = ++newItemId;
+		var linkToEventId = ++newItemId;
 
-		// Default event for this interaction
-		childTemplate = fs.readFileSync(config.paths.templates+'/objects/event.handlebars', { encoding:'utf8' });
-		item.defaultEvent =  Handlebars.compile(childTemplate)({
-			Id: ++newItemId,
+
+		var linkToEvent = eventTemplate({
+			Id: linkToEventId,
 			Name: '',
-			Description: '',
-			buildDateTime: data.buildDateTime
+			Description: 'LinkTo event for '+quality.Name,
+			Image: 'null',
+			buildDateTime: data.buildDateTime,
+			linkToEvent: "null",
+			interactionChildren: ''
 		});
 
-		// Optional interactions for this default event
+		// Double-event (Interaction->DefaultEvent->LinktoEvent) for this interaction (to hang the various route interactions off)
+		quality.defaultEvent = eventTemplate({
+			Id: defaultEventId,
+			Name: 'Default event for '+quality.Name,
+			Description: prepareString(quality.Description),
+			Image: '',
+			buildDateTime: data.buildDateTime,
+			interactionChildren: '',
+			linkToEvent: linkToEvent
+		});
 
-		rendered.push(Handlebars.compile(template)(item));
+		quality.Name = prepareString(quality.Name);
+		quality.Description = '';
+		quality.buildDateTime = data.buildDateTime;
+
+		interactions.push(interactionTemplate(quality));
+
+
+		// Generate interactions to affect this quality
+		var interactionChildren = [];
+		var routesToNode = query.filterPathsToNode(query.pathsToNode(quality, {}), 'additive');
+		var hintsMap = {};
+		getHints(routesToNode, [], hintsMap);
+
+		Object.keys(hintsMap).forEach(function(text) {
+
+			var interactionId = ++newItemId;
+			var eventId = ++newItemId;
+
+			var specificInteractionDefaultEvent = eventTemplate({
+				Id: eventId,
+				Name: 'Detailed directions for '+prepareString(quality.Name),
+				Description: prepareString(text),
+				Image: quality.Image || 'null',
+				buildDateTime: data.buildDateTime,
+				interactionChildren: '',
+				linkToEvent: 'null'
+			});
+
+			interactionChildren.push(interactionTemplate({
+				Id: interactionId,
+				Name: prepareString(text),
+				Description: '',
+				buildDateTime: data.buildDateTime,
+				defaultEvent: specificInteractionDefaultEvent
+			}));
+		});
+
+		chosenQualityEvents.push(eventTemplate({
+			Id: linkToEventId,
+			Name: prepareString(quality.Name),
+			Description: 'To acquire '+prepareString(quality.Name)+' you may...',
+			Image: quality.Image || 'null',
+			buildDateTime: data.buildDateTime,
+			linkToEvent: 'null',
+			interactionChildren: interactionChildren
+		}));
+
 	});
 
-	return rendered.join(',\n');
+	additionalEvents = additionalEvents.concat(chosenQualityEvents);
+
+	return {
+		interactions: interactions,
+		additionalEvents: additionalEvents
+	};
+}
+
+function getHints(routeNode, ancestry, hintsMap) {
+	var new_ancestry = ancestry.slice();
+  new_ancestry.push(routeNode.node);
+  routeNode.children.forEach(function(child_route, index, children) {
+    getHints(child_route, new_ancestry, hintsMap);
+  });
+
+  if(!routeNode.children.length) {	// Leaf node
+		var hint = query.describeRoute(new_ancestry);
+		hintsMap[hint] = true;
+  }
+
+  return hintsMap
 }
 
 function prepareString(raw) {
-	//return raw.replace(/"/g, /\\"/g).replace(/\s*\[[^\]]*\]/g, '');
-	return Handlebars.Utils.escapeExpression(raw).replace(/\s*\[[^\]]*\]/g, '').replace(/&#x27;/, '\'');
+	return Handlebars.Utils.escapeExpression(raw).replace(/\s*\[[^\]]*\]/g, '').replace(/&#x27;/g, '\'');
 }
 
 function renderTemplates(data) {
-
 
 	var ids = JSON.parse(JSON.stringify(data.baseGameIds));
 
 	Handlebars.registerHelper('id', function(name) {
 		ids[name] = (typeof ids[name] === "undefined") ? 0 : ids[name];
-		//console.log("id", name, "is", ids[name]);
 		return ids[name];
 	});
 
 	Handlebars.registerHelper('increment', function(name, amount) {
 		amount = (typeof amount === "undefined" || typeof amount === "object") ? 1 : amount;
 		ids[name] += amount;
-		//console.log("Increment", name, "to", ids[name]);
 	  return ids[name];
 	});
 
 	Handlebars.registerHelper('bumpToNext', function(name, amount) {
 		amount = (typeof amount === "undefined" || typeof amount === "object") ? 100 : amount;
 		ids[name] = Math.ceil((ids[name]+1)/amount) * amount;
-		//console.log("Bumping", name, "by", amount, "to", ids[name]);
 	  return ids[name];
 	});
 
