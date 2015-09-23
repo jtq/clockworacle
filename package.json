@@ -22,6 +22,7 @@
     "File": "latest"
   },
   "scripts": {
+    "build": "npm run build-ui && npm run build-mod",
     "build-ui": "npm run compilecss && npm run compilejs && npm run compilehtml",
       "compilecss": "cp src/styles/sunless-sea.css build/ui/sunless-sea.css",
       "compilejs": "browserify src/**/*.js -o build/ui/sunless-sea.js --debug",
