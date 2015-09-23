@@ -27,3 +27,4 @@ document.getElementById('paths-to-node').addEventListener('click', query.pathsTo
 
 // For convenience
 window.api = api;
+window.api.query = query;

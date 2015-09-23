@@ -153,7 +153,7 @@ function renderPathsToNode(routeNode, ancestry) {
     reqsTitle.innerHTML = "Requirements";
     description.appendChild(reqsTitle);
 
-    var total_requirements = renderRouteRequirements(new_ancestry);
+    var total_requirements = getRouteRequirements(new_ancestry);
     
     description.appendChild(total_requirements.toDom("small", false));
     element.appendChild(description);
@@ -162,13 +162,13 @@ function renderPathsToNode(routeNode, ancestry) {
   return element;
 }
 
+function lower(text) {
+  return text.slice(0,1).toLowerCase()+text.slice(1);
+}
+
 function describeRoute(ancestry) {
   var a = ancestry.slice().reverse();
 
-  function lower(text) {
-    return text.slice(0,1).toLowerCase()+text.slice(1);
-  }
-  
   var guide = "";
   if(a[0] instanceof api.types.Area) {
     if(a[1] instanceof api.types.Event) {
@@ -189,7 +189,7 @@ function describeRoute(ancestry) {
         guide += " and "+lower(a[1].Name);
       }
       else if(a[1] instanceof api.types.Exchange && a[2] instanceof api.types.Shop) {
-        guide += " and look for "+a[2].Name+" in "+a[1].Name;
+        guide += " and look for the "+a[2].Name+" Emporium in "+a[1].Name;
       }
 
       guide += ".";
@@ -203,13 +203,73 @@ function describeRoute(ancestry) {
     guide += ".";
   }
   else if(a[0] instanceof api.types.Event && a[0].tag === "use" && !(a[1] instanceof api.types.QualityRequirement)) {
-    guide = "Acquire " + lower(a[0].Name) + " and " + lower(a[1].Name) + ".";
+    if(a[0].Name.match(/^\s*Speak/i)) {
+      guide = a[0].Name;
+    }
+    else if(a[0].Name.match(/^\s*A/i)) {
+      guide = "Acquire "+lower(a[0].Name);
+    }
+    else {
+      guide = "Find a "+lower(a[0].Name);
+    }
+    guide += " and " + lower(a[1].Name) + ".";
   }
 
   return guide;
 }
 
-function renderRouteRequirements(ancestry) {
+function detailRoute(ancestry) {
+  var a = ancestry.slice().reverse();
+
+  var guide = "";
+  if(a[0] instanceof api.types.Area) {
+    if(a[1] instanceof api.types.Event) {
+      guide = "You must travel to "+a[0].Name+" and look for "+a[1].Name+".";
+      if(a[2] instanceof api.types.Interaction) {
+        guide += "  When you find it you should ";
+        if("\"'".indexOf(a[2].Name[0]) !== -1) {
+          guide += "say ";
+        }
+        guide += lower(a[2].Name);
+      }
+      guide += ".";
+    }
+    else {
+      guide = "Make for "+a[0].Name;
+
+      if(a[1] instanceof api.types.Interaction) {
+        guide += " and "+lower(a[1].Name);
+      }
+      else if(a[1] instanceof api.types.Exchange && a[2] instanceof api.types.Shop) {
+        guide += ".  Upon arrival go to "+a[1].Name+", and look for the shop "+a[2].Names;
+      }
+
+      guide += ".";
+    }
+  }
+  else if(a[0] instanceof api.types.SpawnedEntity) {
+    guide = "You must hunt the mythical zee-peril known as the "+a[0].HumanName+", engage it in battle and defeat it.";
+    if(a[2] instanceof api.types.Interaction) {
+      guide += "  Once you have conquered it you must " + lower(a[2].Name) + " to help secure your prize.";
+    }
+  }
+  else if(a[0] instanceof api.types.Event && a[0].tag === "use" && !(a[1] instanceof api.types.QualityRequirement)) {
+    if(a[0].Name.match(/^\s*Speak/i)) {
+      guide = "First you must "+lower(a[0].Name);
+    }
+    else if(a[0].Name.match(/^\s*A/i)) {
+      guide = "Source "+lower(a[0].Name);
+    }
+    else {
+      guide = "Try to locate a "+lower(a[0].Name);
+    }
+    guide += ", and then " + lower(a[1].Name) + ".";
+  }
+
+  return guide;
+}
+
+function getRouteRequirements(ancestry) {
 
   var reqs = {};
 
@@ -245,5 +305,6 @@ module.exports = {
   filterPathsToNode: filterPathsToNode,
   renderPathsToNode: renderPathsToNode,
   describeRoute: describeRoute,
-  renderRouteRequirements: renderRouteRequirements
+  detailRoute: detailRoute,
+  getRouteRequirements: getRouteRequirements
 };

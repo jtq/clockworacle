@@ -12,10 +12,10 @@
 	},
 	"baseGameIds": {
 		"quality": 415000,
-		"event": 416000,
-		"acquire": 417000,
-		"learn": 418000,
-		"suffer": 419000,
-		"become": 419500
+		"event": 500000,
+		"acquire": 600000,
+		"learn": 700000,
+		"suffer": 800000,
+		"become": 900000
 	}
 }

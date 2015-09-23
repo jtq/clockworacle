@@ -116,7 +116,7 @@ function generateObjectListFromClump(baseId, clump, data) {
 		// Double-event (Interaction->DefaultEvent->LinktoEvent) for this interaction (to hang the various route interactions off)
 		quality.defaultEvent = eventTemplate({
 			Id: defaultEventId,
-			Name: 'Default event for '+quality.Name,
+			Name: '',
 			Description: prepareString(quality.Description),
 			Image: '',
 			buildDateTime: data.buildDateTime,
@@ -127,6 +127,7 @@ function generateObjectListFromClump(baseId, clump, data) {
 		quality.Name = prepareString(quality.Name);
 		quality.Description = '';
 		quality.buildDateTime = data.buildDateTime;
+		quality.qualityRequirements = '[]';
 
 		interactions.push(interactionTemplate(quality));
 
@@ -134,32 +135,46 @@ function generateObjectListFromClump(baseId, clump, data) {
 		// Generate interactions to affect this quality
 		var interactionChildren = [];
 		var routesToNode = query.filterPathsToNode(query.pathsToNode(quality, {}), 'additive');
-		var hintsMap = {};
-		getHints(routesToNode, [], hintsMap);
+		var hints = [];
+		getHints(routesToNode, [], hints);
 
-		Object.keys(hintsMap).forEach(function(text) {
+		var routesArray = [];
+		getAncestryLists(routesToNode, [], routesArray);
+
+		for(var i=0; i<hints.length; i++) {
+
+			var hint = hints[i];
 
 			var interactionId = ++newItemId;
 			var eventId = ++newItemId;
 
 			var specificInteractionDefaultEvent = eventTemplate({
 				Id: eventId,
-				Name: 'Detailed directions for '+prepareString(quality.Name),
-				Description: prepareString(text),
+				Name: '',
+				Description: 'Curiosity sated for now, you close the cabinet.<br /><br />You can\'t help but wonder at what cost, however.',
 				Image: quality.Image || 'null',
 				buildDateTime: data.buildDateTime,
 				interactionChildren: '',
-				linkToEvent: 'null'
+				linkToEvent: '{ "Id": 416000 }'
 			});
+
+			var requirements = query.getRouteRequirements(routesArray[i]);
 
 			interactionChildren.push(interactionTemplate({
 				Id: interactionId,
-				Name: prepareString(text),
+				Name: prepareString(hint),
 				Description: '',
 				buildDateTime: data.buildDateTime,
+				qualityRequirements: JSON.stringify(requirements
+					.map(function(req) {
+						req.attribs.Id = ++newItemId;
+						req.attribs.Name = prepareString(req.attribs.Name);
+						req.attribs.VisibleWhenRequirementFailed = true;
+						return req.attribs; })
+				),
 				defaultEvent: specificInteractionDefaultEvent
 			}));
-		});
+		}
 
 		chosenQualityEvents.push(eventTemplate({
 			Id: linkToEventId,
@@ -181,23 +196,55 @@ function generateObjectListFromClump(baseId, clump, data) {
 	};
 }
 
-function getHints(routeNode, ancestry, hintsMap) {
+function getHints(routeNode, ancestry, hints) {
 	var new_ancestry = ancestry.slice();
   new_ancestry.push(routeNode.node);
   routeNode.children.forEach(function(child_route, index, children) {
-    getHints(child_route, new_ancestry, hintsMap);
+    getHints(child_route, new_ancestry, hints);
   });
 
   if(!routeNode.children.length) {	// Leaf node
 		var hint = query.describeRoute(new_ancestry);
-		hintsMap[hint] = true;
+		hints.push(hint);
   }
 
-  return hintsMap
+  return hints;
+}
+
+function getAncestryLists(routeNode, ancestry, all) {
+	var new_ancestry = ancestry.slice();
+	new_ancestry.push(routeNode.node);
+	routeNode.children.forEach(function(child_route, index, children) {
+		var child_ancestry = new_ancestry.slice();
+    getAncestryLists(child_route, child_ancestry, all);
+  });
+
+  if(!routeNode.children.length) {	// Leaf node
+  	all.push(ancestry);
+  }
+}
+
+function getDetails(routeNode, ancestry, details) {
+	var new_ancestry = ancestry.slice();
+  new_ancestry.push(routelNode.node);
+  routeNode.children.forEach(function(child_route, index, children) {
+    getDetails(child_route, new_ancestry, details);
+  });
+
+  if(!routeNode.children.length) {	// Leaf node
+		var detail = query.detailRoute(new_ancestry);
+		details.push(detail);
+  }
+
+  return details;
 }
 
 function prepareString(raw) {
-	return Handlebars.Utils.escapeExpression(raw).replace(/\s*\[[^\]]*\]/g, '').replace(/&#x27;/g, '\'');
+	return Handlebars.Utils.escapeExpression(raw)
+		.replace(/\s*\[[^\]]*\]/g, '')
+		.replace(/&#x27;/g, '\'')
+		.replace(/&quot;/g, '\\"')
+		.replace(/&amp;/g, '&');
 }
 
 function renderTemplates(data) {
