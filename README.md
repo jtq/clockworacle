@@ -34,7 +34,7 @@ It will Never Lie to you, but you will Remain Told.  Possibly to Death.
 
 On Windows this is normally `C:\Users\USERNAME\AppData\LocalLow\Failbetter Games\Sunless Sea` (fill in your installation drive letter and Windows username as appropriate).
 
-If you can't find it there, try going to `C:\Users\USERNAME` and searching in subdirectories for a folder called `Sunless Sea`.
+If you can't find it there, try going to your user's home directory and searching in subdirectories for a folder called `Sunless Sea`.
 
 
 #### Create a folder for the mod
@@ -53,7 +53,7 @@ The directions are always truthful, but may be misleading or confusing.  That's 
 
 ## For Sunless Sea modders/developers
 
-## Using the mod-tools UI to explore/query the game JSON files
+Using the mod-tools UI to explore/query the game JSON files:
 
 ### Installation
 
