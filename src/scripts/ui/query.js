@@ -74,6 +74,9 @@ function pathsToNode(node, seen, parent) {
   else if(node instanceof api.types.Event && parent instanceof api.types.Event && (parent.tag === "killed" || parent.tag === "pacified")) { // If this is an event that's reachable by killing a monster, don't recurse any other causes (as they're usually misleading/circular)
     return false;
   }
+  else if(node instanceof api.types.Setting) {
+    return false;
+  }
   else if (node instanceof api.types.Port) {
     return new RouteNode(node.area);
   }
