@@ -9,7 +9,6 @@ function Event(raw, parent) {
 	'Description',
 	'Teaser',
 	'Image',
-
 	'Category'
 	];
 	Lump.apply(this, arguments);
@@ -24,9 +23,10 @@ function Event(raw, parent) {
 	this.linkToEvent = null;
 
 	this.limitedToArea = null;
+
+	this.setting = null;
 	
 	//Deck
-	//Setting
 	//Stickiness
 	//Transient
 	//Urgency
@@ -45,6 +45,8 @@ Event.prototype.wireUp = function(theApi) {
 
 	this.limitedToArea = api.getOrCreate(api.types.Area, this.attribs.LimitedToArea, this);
 
+	this.setting = api.getOrCreate(api.types.Setting, this.attribs.Setting, this);
+	
 	Lump.prototype.wireUp.call(this, api);
 };
 

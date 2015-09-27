@@ -22,6 +22,7 @@ var types = {
   Tile: require('./objects/tile'),
   TileVariant: require('./objects/tile-variant'),
   Port: require('./objects/port'),
+  Setting: require('./objects/setting')
 };
 
 // Prepopulate library with Clumps of each type we know about

@@ -16,19 +16,23 @@ function Port(raw, parent) {
 	Lump.apply(this, arguments);
 
 	this.SettingId = raw.Setting.Id;
+	this.setting = null;
 
 	this.area = null;
 
+	this.exchanges = null;
 }
 Object.keys(Lump.prototype).forEach(function(member) { Port.prototype[member] = Lump.prototype[member]; });
 
 Port.prototype.wireUp = function(theApi) {
 	
 	api = theApi;
+	var self = this;
 
+	this.setting = api.getOrCreate(api.types.Setting, this.attribs.Setting, this);
+	
 	this.area = api.getOrCreate(api.types.Area, this.attribs.Area, this);
 
-	var self = this;
 	this.exchanges = api.library.Exchange.query("SettingIds", function(ids) { return ids.indexOf(self.SettingId) !== -1; });
 
 	Lump.prototype.wireUp.call(this, api);

@@ -32,6 +32,7 @@ Weather: Array[1]
 	Lump.apply(this, arguments);
 
 	this.SettingId = raw.Setting.Id;
+	this.setting = null;
 
 	this.ports = new Clump(this.attribs.PortData || [], Port, this);
 
@@ -42,6 +43,8 @@ Object.keys(Lump.prototype).forEach(function(member) { TileVariant.prototype[mem
 TileVariant.prototype.wireUp = function(theApi) {
 
 	api = theApi;
+
+	this.setting = api.getOrCreate(api.types.Setting, this.attribs.Setting, this);
 
 	this.ports.forEach(function(p) { p.wireUp(api); });
 

@@ -14,6 +14,7 @@ function Exchange(raw, parent) {
 	Lump.apply(this, arguments);
 
 	this.shops = null;
+	this.settings = null;
 }
 Object.keys(Lump.prototype).forEach(function(member) { Exchange.prototype[member] = Lump.prototype[member]; });
 
@@ -21,8 +22,17 @@ Exchange.prototype.wireUp = function(theApi) {
 
 	api = theApi;
 
-	this.shops = new Clump(this.attribs.Shops || [], api.types.Shop, this);
 	var self = this;
+
+	this.shops = new Clump(this.attribs.Shops || [], api.types.Shop, this);
+	
+	this.settings = api.library.Setting.query("Id", function(id) {
+		return self.SettingIds.indexOf(id) !== -1;
+	});
+	this.settings.forEach(function (s) {
+		self.parents.push(s);
+	});
+	
 	this.ports = api.library.Port.query("SettingId", function(id) {
 		return self.SettingIds.indexOf(id) !== -1;
 	});

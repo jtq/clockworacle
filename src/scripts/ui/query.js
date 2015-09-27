@@ -79,7 +79,7 @@ function pathsToNode(node, seen, parent) {
   }
   else if(node.limitedToArea && node.limitedToArea.Id !== 101956) {
     var area_name = node.limitedToArea.Name.toLowerCase();
-    var event_name = node.Name.toLowerCase();
+    var event_name = (node.Name && node.Name.toLowerCase()) || "";
     if(area_name.indexOf(event_name) !== -1 || event_name.indexOf(area_name) !== -1) {  // If Area has similar name to Event, ignore the event and just substitute the area
       return new RouteNode(node.limitedToArea);
     }
