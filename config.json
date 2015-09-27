@@ -12,7 +12,10 @@
 	},
 	"baseGameIds": {
 		"quality": 415000,
-		"event": 500000,
+		"prelimEvent": 500000,
+		"buyOracle": 5000010,
+		"sellOracle": 500020,
+		"event": 500025,
 		"acquire": 600000,
 		"learn": 700000,
 		"suffer": 800000,

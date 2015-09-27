@@ -155,7 +155,7 @@ function generateObjectListFromClump(baseId, clump, data) {
 				Image: quality.Image || 'null',
 				buildDateTime: data.buildDateTime,
 				interactionChildren: '',
-				linkToEvent: '{ "Id": 416000 }'
+				linkToEvent: '{ "Id": '+config.baseGameIds.event+' }'
 			});
 
 			var requirements = query.getRouteRequirements(routesArray[i]);
