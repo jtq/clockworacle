@@ -3,8 +3,8 @@
 	"paths": {
 		"templates": "src/templates",
 		"builddir": {
-			"mod": "build/mod",
-			"ui": "build/ui"
+			"mod": "build/clockworacle",
+			"ui": "build/modtools"
 		}
 	},
 	"locations": {
