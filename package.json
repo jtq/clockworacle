@@ -29,6 +29,7 @@
     "build-ui": "npm run compilecss && npm run compilejs && npm run compilehtml",
       "compilecss": "cp src/styles/sunless-sea.css build/modtools/sunless-sea.css",
       "compilejs": "browserify src/**/*.js -o build/modtools/sunless-sea.js --debug",
+      "postcompilejs": "cp -r lib build/modtools/",
       "compilehtml": "render src/templates/index.html.handlebars --context config.json -o build/modtools/index.html",
 
     "prebuild-mod": "mkdir -p build/clockworacle",
