@@ -12,11 +12,11 @@
 		"imagesPath": "game-data/icons"
 	},
 	"baseGameIds": {
-		"quality": 415000,
-		"prelimEvent": 500000,
-		"buyOracle": 5000010,
-		"sellOracle": 500020,
-		"event": 500025,
+		"quality": 500000,
+		"prelimEvent": 500010,
+		"buyOracle": 5000020,
+		"sellOracle": 500030,
+		"event": 500035,
 		"acquire": 600000,
 		"learn": 700000,
 		"suffer": 800000,
