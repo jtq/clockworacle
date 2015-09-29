@@ -26,9 +26,11 @@ It will Never Lie to you, but you will Remain Told.  Possibly to Death.
 <sub>Clockwork Oracle is not to be used for Prognostication, Augury or Panupunitoplasty.  Any resemblance to Real Persons, Living or Dead, is probably Significant but wisest to Ignore. Do not Taunt the Clockwork Oracle.  Warranty void if Clockwork Oracle consulted.</sub>
 
 
-## For Players
+## Players
 
 ### Installing the mod
+
+[Download the release version of the mod](https://github.com/jtq/clockworacle/raw/master/release/clockworacle-mod.zip).
 
 #### Find your Sunless Sea game-data directory
 
@@ -37,36 +39,38 @@ On Windows this is normally `C:\Users\USERNAME\AppData\LocalLow\Failbetter Games
 If you can't find it there, try going to your user's home directory and searching in subdirectories for a folder called `Sunless Sea`.
 
 
-#### Create a folder for the mod
+#### Install the mod files
 
-The should be a folder under your game-data directory called `addons`.  Inside this folder **create a new folder** called `Clockworacle`, and download the two `.json` files from the build/mod folder into it - [events.json (~**9MB**)](https://raw.githubusercontent.com/jtq/clockworacle/master/build/mod/events.json) and [qualities.json (~2Kb)](https://raw.githubusercontent.com/jtq/clockworacle/master/build/mod/qualities.json).
+There should be a folder under your game-data directory called `addons` - create it if it doesn't exist already.
+
+Now unzip the mod files into this folder - it should automatically create a subdirectory called `clockworacle`.
+
+That's it - you're done.  Enjoy!
 
 #### Run Sunless Sea
 
-**#### Decide how to make item available in-game and fill in details/hints here ####**
+If you look around Fallen London you should see a new event that involves travelling to a mysterious little shop.
 
-**That's it - you're done.  Enjoy!**
+Once you have acquired the Clockwork Oracle you will be able to go into your hold in the game at any time, right-click on the Clockwork Oracle item and click "Use" from the menu to consult the Clockwork Oracle for hints on acquiring a wide variety of qualities, attributes, trade goods, characteristics and quest-items in the Neath.
 
-You can now go into your hold in the game at any time, right-click on the Clockwork Oracle and click "Use" from the menu, and consult the Clockwork Oracle for hints on acquiring a wide variety of qualities, attributes, trade goods, characteristics and quest-items in the Neath.
+The directions are always truthful, but may be misleading, confusing or incomplete.  That's what happens when you let clockwork do your thinking for you.  Or possibly a bound demon in a box that hates you and wants you to die.  Nobody knows exactly which.
 
-The directions are always truthful, but may be misleading or confusing.  That's what happens when you let clockwork do your thinking for you.  Or possibly a bound demon in a box that hates you and wants you to die.  Nobody knows exactly which.
 
-## For Sunless Sea modders/developers
-
-Using the mod-tools UI to explore/query the game JSON files:
+## Sunless Sea Modders/Developers
 
 ### Installation
 
-* Fork and clone the repo in git.
-* Copy the game json and images files in to the game-data folder, as per the directions in **Installing the mod**, above.
-* Open the build/ui/index.html file in your browser (only tested in Chrome so far, but should probably work in others).  Opening it straight from a `file:///...` URL should work fine.
+* Download and unzip the [precompiled mod-tools](https://github.com/jtq/clockworacle/raw/master/release/modtools.zip).
+* Find your Sunless Sea game-data directory (using the instructions for Players above), and copy each of the `.json` files contained in the various subdirectories of your Sunless Sea game-data directory **directly** into the `modtools\game-data\json` directory (ie, the only thing in the `modtools\game-data\json` directory should be `.json` files - no subdirectories allowed).
+* Now in your Sunless Sea game-data directory open the `images\sn\icons` folder and copy the entire contents into the `modtools\game-data\icons` folder.
+* Open the `modtools\index.html` file in your browser (only tested in Chrome so far, but should probably work in others).  Opening it straight from a `file:///...` URL should work fine.
 * Select all the json files in your game-data/json folder, and drag-and-drop them **all at once** onto the square in the web UI.
 
 ### UI
 
 #### Exploring the basic object-types
 
-After a few seconds (hey, we're chewing through megabytes of text in a browser here!) your UI should unfreeze.  From here you can use the tabs to switch between several of the fundamental types of objects available in the Sunless Sea game - Events (things that can happen in the Gazette view), Qualities (attributes on your character that are set/incremented/decremented to lock/unlock various game events and interactions, SpawnedEntities (monsters in the game-world), etc.
+After a few seconds (we're chewing through megabytes of text in a browser here!) your UI should unfreeze.  From here you can use the tabs to switch between several of the fundamental types of objects available in the Sunless Sea game - Events (things that can happen in the Gazette view), Qualities (attributes on your character that are set/incremented/decremented to lock/unlock various game events and interactions, SpawnedEntities (monsters in the game-world), etc.
 
 If an item has "children" (eg, the various interaction choices offered as part of an Event) then clicking on the item will expand it to show these children (and so on for each child), allowing you to explore the game's storylines and event-sequences.
 
