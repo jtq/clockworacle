@@ -1,0 +1,85 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="sunless-sea.css"></style>
+
+		<script src="../../lib/jquery-1.11.2.js"></script>
+
+		<title>Sunless Sea</title>
+
+	</head>
+	<body>
+
+<div class="loading-controls">
+	<div id="drop-zone">Drop all Sunless Sea JSON files here</div>
+
+	<select id="type">
+		<option value="Quality">1. Qualities</option>
+		<option value="Event">2. Events</option>
+	</select>
+
+	<select id="operation">
+		<option value="any">Any/None</option>
+		<option value="additive">Additive</option>
+		<option value="subtractive">Subtractive</option>
+	</select>
+
+	<input type="button" id="paths-to-node" value="Paths to node" />
+</div>
+
+<div id="tabs">
+	<ul class="buttons">
+		<li data-type="File" class="active">Files</li>
+		<li data-type="Event">Events</li>
+		<li data-type="Quality">Qualities</li>
+		<li data-type="Area">Areas</li>
+		<li data-type="SpawnedEntity">Spawned Entities</li>
+		<li data-type="CombatAttack">Combat Attacks</li>
+		<li data-type="Exchange">Exchanges</li>
+		<li data-type="Tile">Tiles</li>
+		<li data-type="Query">Query</li>
+	</ul>
+	<div class="panes">
+		<div class="pane file">
+			<h3>File list</h3>
+			<div id="list"></div>
+		</div>
+		<div class="pane event">
+			<h3>Events</h3>
+			<div id="event-list"></div>
+		</div>
+		<div class="pane quality">
+			<h3>Qualities</h3>
+			<div id="quality-list"></div>
+		</div>
+		<div class="pane area">
+			<h3>Areas</h3>
+			<div id="area-list"></div>
+		</div>
+		<div class="pane spawnedentity">
+			<h3>Spawned Entity</h3>
+			<div id="spawnedentity-list"></div>
+		</div>
+		<div class="pane combatattack">
+			<h3>Combat Attacks</h3>
+			<div id="combatattack-list"></div>
+		</div>
+		<div class="pane exchange">
+			<h3>Exchanges</h3>
+			<div id="exchange-list"></div>
+		</div>
+		<div class="pane tile">
+			<h3>Tiles</h3>
+			<div id="tile-list"></div>
+		</div>
+		<div class="pane query">
+			<h3 class="pane-title">Query</h3>
+			<div id="query-tree"></div>
+		</div>
+	</div>
+</div>
+
+
+		<script type="text/javascript" src="sunless-sea.js"></script>
+
+	</body>
+</html>

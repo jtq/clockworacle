@@ -1,0 +1,244 @@
+body {
+	font-size: 16px;
+}
+
+.loading-controls {
+
+}
+
+.loading-controls:after {
+	content: '';
+	clear: both;
+}
+
+#drop-zone {
+	display: inline-block;
+  border: 10px dotted #e0e0e0;
+  color: #e0e0e0;
+  padding: 1em;
+}
+
+#drop-zone.drop-target {
+	color: #000000;
+	border-color: #000000;
+}
+
+#tabs {
+	overflow: auto;
+}
+
+#tabs .buttons {
+	list-style-type: none;
+	padding: 0;
+	margin: 1em 0 0 0;
+	overflow: auto;
+}
+
+#tabs .buttons li {
+	float: left;
+	padding: 1em 1em 0.5em 1em;
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+#tabs .buttons li.active {
+	border: 1px solid #c0c0c0;
+	border-bottom-color: #ffffff;
+}
+
+#tabs .panes {
+	overflow: auto;
+	border-top: 1px solid #c0c0c0;
+}
+
+#tabs .panes .pane {
+	float: left;
+	display: none;
+}
+
+#tabs .panes .pane.file {
+	display: block;
+}
+
+.clump-list {
+
+}
+
+ul.clump-list,
+ol.clump-list {
+	clear: both;
+	list-style-type: none;
+	padding: 1em 0 1em 1em;
+}
+ul.clump-list.normal,
+ol.clump-list.normal {
+	padding: 1em 0 1em 1em;
+}
+ul.clump-list.small,
+ol.clump-list.small {
+	padding: 0 0 0 1em;
+}
+
+dl.clump-list {
+	overflow: auto;
+}
+dl.clump-list dt {
+	clear: left;
+	padding: 0;
+	float: left;
+}
+dl.clump-list dd {
+	float: left;
+	margin: 0;
+}
+
+dl.inline .item {
+	margin: 0;
+}
+
+span.item, span.item.small {
+	display: inline-block;
+	margin: 0;
+}
+
+span.item.quantity {
+	padding: 0 0.25em;
+	line-height: 26px;
+}
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+.item {
+	overflow: auto;
+	margin: 0.25em 0;
+	padding: 0.25em;
+}
+.item.normal {
+	border-left: 1px solid #c0c0c0;
+	border-bottom: 1px solid #c0c0c0;
+}
+.item.small {
+	margin: 0 0 0.25em 0;
+	padding: 0 0.25em;
+}
+
+.item .icon {
+	float: left;
+	margin: 0 0.5em 0 -0.25em;
+}
+.item.normal .icon {
+	width: 2.5em;
+}
+.item.small .icon {
+	margin-left: 0;
+	width: 1.25em;
+}
+
+.item .title {
+	margin: 0;
+	white-space: nowrap;
+}
+.item.normal .title {
+}
+.item.small .title {
+	font-weight: normal;
+	padding-left: 1.8em;
+	line-height: 1.65;
+	font-size: medium;
+}
+
+.item .title .tag {
+	padding: 0 0.25em;
+	border-radius: 3px;
+	font-size: medium;
+	font-weight: normal;
+	margin-left: 0.25em;
+	color: #c0c0c0;
+	background-color: #f0f0f0;
+	border: 1px solid #c0c0c0;
+}
+
+.item .title .tag.success {
+	color: #00c000;
+	background-color: #f0fff0;
+	border-color: #00c000;
+}
+
+.item .title .tag.failure {
+	color: #c00000;
+	background-color: #fff0f0;
+	border-color: #c00000;
+}
+
+.item .description {
+	margin: 0;
+}
+.item.normal .description {
+}
+.item.small .description {
+	display: none;
+}
+
+.sidebar {
+	float: right;
+	margin: 0 0 0.25em 0.25em;
+  border-left: 1px solid #c0c0c0;
+  padding-left: 0.5em;
+}
+.sidebar h4 {
+	margin: 0 0 0.5em 0;
+}
+.sidebar .clump-list {
+	margin: 0;
+}
+
+.item .clump-list.small {
+}
+
+.clump-list.small .quantity {
+	margin: 0;
+	line-height: 1.65;
+
+}
+
+.item .clump-list {
+}
+
+.hidden {
+	display: none !important;
+}
+
+
+.ancestry-list, .ancestry-list ul, .ancestry-list ol {
+	padding: 0 0 0 1em;
+}
+
+.ancestry-list ul, .ancestry-list ol {
+  list-style: none;
+  border-left: 1px solid #e0e0e0;
+}
+
+.ancestry-list li {
+	clear: both;
+}
+
+.ancestry-list ul li:before, .ancestry-list ol li:before {
+  content: '\2196';
+  margin: 0 1em 0 0;
+  float:left;
+}
+
+#query-tree .clump-list {
+	margin: 0;
+}
+
+#query-tree .item .route-description {
+	display: inline-block;
+	font-weight: bold;
+	margin: 0.5em 0;
+}
+
+#query-tree .item h5 {
+	margin: 0 0 0.5em 0;
+	font-weight: normal;
+	font-size: medium;
+}
