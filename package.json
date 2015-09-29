@@ -1,15 +1,15 @@
 {
-	"name": "clockworacle",
-	"version": "0.0.1",
+  "name": "clockworacle",
+  "version": "0.0.1",
   "description": "Clockwork Oracle mod for Sunless Sea",
   "author": {
   	"name" : "jtq",
   	"email" : "jtq.github@gmail.com",
   	"url" : "https://github.com/jtq"
-	},
-	"repository" : {
-		"type" : "git",
-		"url" : "https://github.com/jtq/clockworacle.git"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/jtq/clockworacle.git"
   },
   "devDependencies": {
     "jquery": "latest",
