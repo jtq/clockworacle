@@ -2,13 +2,14 @@
 	"title": "Sunless Sea",
 	"paths": {
 		"templates": "src/templates",
+		"modGameJson": "build/modtools/game-data/json",
 		"builddir": {
 			"mod": "build/clockworacle",
 			"ui": "build/modtools"
 		}
 	},
 	"locations": {
-		"imagesPath": "../../game-data/icons"
+		"imagesPath": "game-data/icons"
 	},
 	"baseGameIds": {
 		"quality": 415000,

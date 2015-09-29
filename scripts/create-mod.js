@@ -19,7 +19,7 @@ function loadGameData(onAllLoaded) {
 			var typeName = io.fileObjectMap[filename];
 			var Type = api.types[typeName];
 
-			var filepath = 'game-data/json/'+filename;
+			var filepath = config.paths.modGameJson+'/'+filename;
 			var file = new File(filepath);
 			console.log('Reading game-data', filepath);
 

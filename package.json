@@ -19,8 +19,7 @@
     "render-cli": "latest",
     "handlebars": "latest",
     "filereader": "latest",
-    "File": "latest",
-    "bestzip": "latest"
+    "File": "latest"
   },
   "scripts": {
     "build": "npm run build-ui && npm run build-mod",
@@ -31,6 +30,7 @@
       "compilejs": "browserify src/**/*.js -o build/modtools/sunless-sea.js --debug",
       "postcompilejs": "cp -r lib build/modtools/",
       "compilehtml": "render src/templates/index.html.handlebars --context config.json -o build/modtools/index.html",
+    "postbuild-ui": "mkdir -p build/modtools/game-data/json && mkdir -p build/modtools/game-data/icons",
 
     "prebuild-mod": "mkdir -p build/clockworacle",
     "build-mod": "node scripts/create-mod.js",
@@ -38,10 +38,10 @@
     "release": "npm run release-ui && npm run release-mod",
 
     "prerelease-ui": "npm run build-ui && mkdir -p release",
-    "release-ui": "cd build; bestzip ../release/modtools.zip modtools",
-
+    "release-ui": "cd build; zip -r ../release/modtools.zip modtools -x modtools/game-data/json/*.json -x modtools/game-data/icons/*.png",
+    
     "prerelease-mod": "npm run build-mod && mkdir -p release",
-    "release-mod": "mkdir release; cd build; bestzip ../release/clockworacle-mod.zip clockworacle",
+    "release-mod": "cd build; zip -r ../release/clockworacle-mod.zip clockworacle",
 
     "lint": "jshint src/ spec/",
     "test": "jasmine",
