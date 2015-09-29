@@ -34,7 +34,8 @@ function handleDragDrop(evt) {
   // Files is a FileList of File objects. List some properties.
   var output = [];
   window.files_to_load = 0;
-  for (var i = 0, f; f = files[i]; i++) {
+  for (var i = 0; i < files.length; i++) {
+    var f = files[i];
     var filename = escape(f.name).toLowerCase();
     var objname = fileObjectMap[filename];
     if(objname) {
@@ -111,7 +112,7 @@ function pathsToNode() {
 
   var id = prompt("Id of "+type);
 
-  if(id == null) {  // Cancelled dialogue
+  if(!id) {  // Cancelled dialogue
     return;
   }
 
@@ -203,8 +204,8 @@ function pathsToNode_Recurse(node, seen, parent) {
   }
   else {
     for(var i=0; i<node.parents.length; i++) {
-      var parent = node.parents[i];
-      var subtree = pathsToNode_Recurse(parent, ancestry, node);
+      var the_parent = node.parents[i];
+      var subtree = pathsToNode_Recurse(the_parent, ancestry, node);
       if(subtree) {
         this_node.children.push(subtree);
       }
@@ -267,7 +268,7 @@ function describe(ancestry) {
         }
         guide += lower(a[2].Name);
       }
-      guide += "."
+      guide += ".";
     }
     else {
       guide = "Travel to "+a[0].Name;
@@ -320,7 +321,7 @@ function requirements(ancestry) {
     }
   });
 
-  var result = Object.keys(reqs).map(function(key) { return reqs[key] });
+  var result = Object.keys(reqs).map(function(key) { return reqs[key]; });
 
   return new Clump(result, QualityRequirement);
 }

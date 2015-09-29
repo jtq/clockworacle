@@ -139,3 +139,5 @@ Lump.prototype = {
 		return this.constructor.name + " (#" + this.Id + ")";
 	}
 };
+
+exports = Lump;

@@ -99,3 +99,5 @@ QualityRequirement.prototype.toDom = function(size) {
 
 	return element;
 };
+
+exports = QualityRequirement;

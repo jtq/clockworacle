@@ -113,3 +113,5 @@ CombatAttack.prototype.toDom = function(size, includeChildren) {
 
 	return element;
 };
+
+exports = CombatAttack;

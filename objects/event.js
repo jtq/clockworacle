@@ -113,3 +113,5 @@ Event.prototype.toDom = function(size, includeChildren) {
 
 	return element;
 };
+
+exports = Event;

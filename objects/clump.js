@@ -258,3 +258,5 @@ Clump.prototype.describe = function() {
 	var self = this;
 	return Object.keys(this.items).map(function(i) { return self.items[i].toString() }).join(" and ")
 };
+
+exports = Clump;

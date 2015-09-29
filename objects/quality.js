@@ -85,3 +85,5 @@ Quality.prototype.toDom = function(size, includeChildren, tag) {
 
 	return element;
 };
+
+exports = Quality;

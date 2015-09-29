@@ -27,3 +27,5 @@ Area.prototype.toDom = function(size) {
 
 	return element;
 };
+
+exports = Area;
