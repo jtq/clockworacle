@@ -28,7 +28,7 @@ TerrainData: Array[14]
 Weather: Array[1]
 */
 
-	raw.Id = raw.Name;
+	raw.Id = parent.Name+"/"+raw.Name;
 	Lump.apply(this, arguments);
 
 	this.SettingId = raw.Setting.Id;

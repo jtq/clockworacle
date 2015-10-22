@@ -32,8 +32,43 @@ function Lump(raw, parent) {
 	if(!library[this.constructor.name]) {
 		library[this.constructor.name] = new Clump([], this);
 	}
+
+	if(library[this.constructor.name].items[this.Id]) {	// Something with this ID already exists!
+
+		var existingObject = library[this.constructor.name].items[this.Id];
+
+		if(!isFunctionallySame(this.attribs, existingObject.attribs)) {	// Was it a functionally-identical redefinition of this object?
+			console.warn("Duplicate ID", this.constructor.name+" "+this.Id+" already exists in the library - replacing", existingObject, "with redefinition", this);
+		}
+	}
 	library[this.constructor.name].items[this.Id] = this;
 }
+
+var isFunctionallySame = function(obj1, obj2) {
+
+	if(obj1 === obj2) {
+		return true;
+	}
+
+	if(obj1 instanceof Object) {
+		if(!(obj2 instanceof Object) || obj1.constructor !== obj2.constructor) {
+			return false;
+		}
+
+		var allKeys = Object.keys(obj1).concat(Object.keys(obj2)).filter(function (value, index, self) { 
+    	return self.indexOf(value) === index;
+		});
+
+		return allKeys.map(function(key) {
+			return isFunctionallySame(obj1[key], obj2[key]);
+		}).reduce(function(previousValue, currentValue) {
+			return previousValue && currentValue;
+		}, true);
+	}
+
+	return false;
+
+};
 
 Lump.prototype = {
 	wireUp: function(theApi) {
@@ -90,7 +125,9 @@ Lump.prototype = {
 
 	toString: function() {
 		return this.constructor.name + " (#" + this.Id + ")";
-	}
+	},
+
+	isFunctionallySame: isFunctionallySame	// Convenience utility function
 };
 
 module.exports = Lump;

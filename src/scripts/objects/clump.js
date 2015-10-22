@@ -18,6 +18,9 @@ function Clump(raw, Type, parent) {
 				item.parents.push(parent);
 			}
 		}
+		if(self.items[item.Id]) {
+			console.warn(Type.name+" "+item.Id+" already exists in this clump.  Duplicated IDs for different objects in the game-json?")
+		}
 		self.items[item.Id] = item;
 	});
 }

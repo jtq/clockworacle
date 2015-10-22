@@ -12,7 +12,7 @@ function Port(raw, parent) {
 	];
 
 
-	raw.Id = raw.Name;
+	raw.Id = parent.Name+"/"+raw.Name;
 	Lump.apply(this, arguments);
 
 	this.SettingId = raw.Setting.Id;
