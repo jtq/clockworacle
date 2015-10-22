@@ -2,6 +2,11 @@
 
 A mod for Sunless Sea by Failbetter Games
 
+* [Players](#players)
+* [Modders/Developers](#sunless-sea-moddersdevelopers)
+
+## Introduction
+
 **New players!**  Tired of dying needlessly because you didn't know it was a bad idea to poke a flock of harmless-looking blue birds?
 
 **Veteran Zee-captains!** Bored of sailing endlessly in circles because you can't remember where to find a lump of Blue Scintillack for that one quest you're stuck on?
@@ -24,7 +29,6 @@ It will Never Lie to you, but you will Remain Told.  Possibly to Death.
 <sub>Messirs Faust and Fhlange disclaim to the fullest extend permissable by Law and Civility (and then about ten percent further again) any and all Responsibility, Inferred or Implied, for any effects on the user's Sanity, Character, Mortal Status, Personality, Psychological Stability Physical Stability or Vital Statistics incurred as a Consequence of consulting the Aforementioned Product.</sub>
 
 <sub>Clockwork Oracle is not to be used for Prognostication, Augury or Panupunitoplasty.  Any resemblance to Real Persons, Living or Dead, is probably Significant but wisest to Ignore. Do not Taunt the Clockwork Oracle.  Warranty void if Clockwork Oracle consulted.</sub>
-
 
 ## Players
 
