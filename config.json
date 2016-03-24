@@ -4,7 +4,7 @@
 		"templates": "src/templates",
 		"modGameJson": "build/modtools/game-data/json",
 		"builddir": {
-			"mod": "build/clockworacle",
+			"mod": "build/clockworacle/entities",
 			"ui": "build/modtools"
 		}
 	},

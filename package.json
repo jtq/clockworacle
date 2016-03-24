@@ -32,16 +32,16 @@
       "compilehtml": "render src/templates/index.html.handlebars --context config.json -o build/modtools/index.html",
     "postbuild-ui": "mkdir -p build/modtools/game-data/json && mkdir -p build/modtools/game-data/icons",
 
-    "prebuild-mod": "mkdir -p build/clockworacle",
+    "prebuild-mod": "rm -rf build/clockworacle && mkdir -p build/clockworacle/entities",
     "build-mod": "node scripts/create-mod.js",
 
     "release": "npm run release-ui && npm run release-mod",
 
     "prerelease-ui": "npm run build-ui && mkdir -p release",
-    "release-ui": "cd build; zip -r ../release/modtools.zip modtools -x modtools/game-data/json/*.json -x modtools/game-data/icons/*.png",
+    "release-ui": "rm release/modtools.zip; cd build; zip -r ../release/modtools.zip modtools -x modtools/game-data/json/*.json -x modtools/game-data/icons/*.png",
     
     "prerelease-mod": "npm run build-mod && mkdir -p release",
-    "release-mod": "cd build; zip -r ../release/clockworacle-mod.zip clockworacle",
+    "release-mod": "rm release/clockworacle-mod.zip; cd build; zip -r ../release/clockworacle-mod.zip clockworacle",
 
     "lint": "jshint src/ spec/",
     "test": "jasmine",
