@@ -112,6 +112,6 @@ Finally, below the path you should see an auto-generated hint and flattened/summ
 Compiled and up to date as of:
 
 * Sunless Sea v1.0.4.2130
-* The Rise of Pigmote update (3rd September 2015: http://steamcommunity.com/games/304650/announcements/detail/132083221085800524)
+* The Rose Market update (28th January 2016: http://steamcommunity.com/games/304650/announcements/detail/954003578980280207)
 
 Fallen London is © 2015 and ™ Failbetter Games Limited: [www.fallenlondon.com](http://www.fallenlondon.com).  This is an unofficial fan work.
