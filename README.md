@@ -45,7 +45,7 @@ If you can't find it there, try going to your user's home directory and searchin
 
 #### Install the mod files
 
-There should be a folder under your game-data directory called `addons` - create it if it doesn't exist already.
+There should be a folder under your game-data directory called `addon` - create it if it doesn't exist already.
 
 Now unzip the mod files into this folder - it should automatically create a subdirectory called `clockworacle`.
 
