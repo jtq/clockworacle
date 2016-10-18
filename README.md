@@ -116,7 +116,7 @@ Finally, below the path you should see an auto-generated hint and flattened/summ
 * Clone the project code: `git clone https://github.com/jtq/clockworacle.git`
 * From inside the root folder of the repo, install the dependencies: `npm install`
 * Locate your game folder - usually something like `C:\Users\USERNAME\AppData\LocalLow\Failbetter Games\Sunless Sea` (where `C` is your installation drive and `USERNAME` is your Windows username).
-* Copy all the `.json` files under the game folder (including any in subdirectories) into the codebase's `build/modtools/game-data/json` folder (copy all `.json` files directly into this folder - do not replicate any sub-folders in your game-data folder)
+* Copy all the `.json` files (except those with `_import` in the name) under the game folder (including any in subdirectories) into the codebase's `build/modtools/game-data/json` folder (copy all `.json` files *directly* into this folder - do not replicate any sub-folders that are in your game folder)
 * (Optional) Copy all your game-images from the `images\sn\icons` subdirectory of your game folder into the codebase's `build/modtools/game-data/icons` folder
 
 ### Build the mod-tools
@@ -134,7 +134,7 @@ Finally, below the path you should see an auto-generated hint and flattened/summ
 
 Compiled and up to date as of:
 
-* Sunless Sea v1.0.4.2130
-* The Rose Market update (28th January 2016: http://steamcommunity.com/games/304650/announcements/detail/954003578980280207)
+* Sunless Sea v2.1.2.3064
+* Zubmariner update (11th October 2016: http://steamcommunity.com/games/304650/announcements/detail/941641850289522196)
 
 Fallen London is © 2015 and ™ Failbetter Games Limited: [www.fallenlondon.com](http://www.fallenlondon.com).  This is an unofficial fan work.
