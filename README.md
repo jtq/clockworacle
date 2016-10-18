@@ -4,6 +4,7 @@ A mod for Sunless Sea by Failbetter Games
 
 * [Players](#players)
 * [Modders/Developers](#sunless-sea-moddersdevelopers)
+* [Build Instructions](#build-instructions)
 
 ## Introduction
 
@@ -106,6 +107,28 @@ Each of these steps may have their own Quality Requirements - look them up in th
 Finally, below the path you should see an auto-generated hint and flattened/summarised list of Quality Requirements that represents the option the Clockwork Oracle mod will display for this path.
 
 (Note that presently the Clockwork Oracle mod only offers additive paths in-game - subtractive paths are currently offered only by the UI, for debugging/exploration purposes.)
+
+## Build Instructions
+
+### Set up
+
+* Install node and npm (the nodep ackage manager) if you don't already have them installed
+* Clone the project code: `git clone https://github.com/jtq/clockworacle.git`
+* From inside the root folder of the repo, install the dependencies: `npm install`
+* Locate your game folder - usually something like `C:\Users\USERNAME\AppData\LocalLow\Failbetter Games\Sunless Sea` (where `C` is your installation drive and `USERNAME` is your Windows username).
+* Copy all the `.json` files under the game folder (including any in subdirectories) into the codebase's `build/modtools/game-data/json` folder (copy all `.json` files directly into this folder - do not replicate any sub-folders in your game-data folder)
+* (Optional) Copy all your game-images from the `images\sn\icons` subdirectory of your game folder into the codebase's `build/modtools/game-data/icons` folder
+
+### Build the mod-tools
+
+* Build the browser-based UI explorer: `npm run build-ui`
+* Open `build/modtools/index.html` in your browser (see [Modders/Developers](#sunless-sea-moddersdevelopers) for usage instructions)
+
+### Build the Clockwork Oracle mod
+
+* Build the mod: `npm run release-mod`
+* A `clockworacle-mod.zip` file containing the mod will be placed in the `release` folder (see [Players](#players) for installation instructions)
+
 
 ## Final Notes
 
