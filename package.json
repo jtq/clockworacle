@@ -38,7 +38,7 @@
     "release": "npm run release-ui && npm run release-mod",
 
     "prerelease-ui": "npm run build-ui && mkdir -p release",
-    "release-ui": "rm release/modtools.zip; cd build; zip -r ../release/modtools.zip modtools -x modtools/game-data/json/*.json -x modtools/game-data/icons/*.png",
+    "release-ui": "rm release/modtools.zip; cd build; zip -r ../release/modtools.zip modtools -x modtools/game-data/json/*.json -x modtools/game-data/icons/*.png -x modtools/game-data/icons/*.db",
     
     "prerelease-mod": "npm run build-mod && mkdir -p release",
     "release-mod": "rm release/clockworacle-mod.zip; cd build; zip -r ../release/clockworacle-mod.zip clockworacle",
