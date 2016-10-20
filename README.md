@@ -12,7 +12,7 @@ A mod for Sunless Sea by Failbetter Games
 
 **Veteran Zee-captains!** Bored of sailing endlessly in circles because you can't remember where to find a lump of Blue Scintillack for that one quest you're stuck on?
 
-Sick of constantly having to slink back to [the wiki](http://sunlesssea.gamepedia.com/) or face hours of grinding and pointless, unnecessary deaths?  (Pointy *necessary* deaths, of course, still being very much encouraged on the Sunless Sea, and rightly so).
+Sick of constantly having to slink back to [the wiki](http://sunlesssea.gamepedia.com/) or face hours of grinding and pointless, unnecessary deaths?  (Pointy *necessary* deaths, of course, still being very much a part of Sunless Sea, and rightly so).
 
 *We feel your pain.*
 
@@ -112,7 +112,7 @@ Finally, below the path you should see an auto-generated hint and flattened/summ
 
 ### Set up
 
-* Install node and npm (the nodep ackage manager) if you don't already have them installed
+* Install node.js and npm (the node.js package manager) if you don't already have them installed
 * Clone the project code: `git clone https://github.com/jtq/clockworacle.git`
 * From inside the root folder of the repo, install the dependencies: `npm install`
 * Locate your game folder - usually something like `C:\Users\USERNAME\AppData\LocalLow\Failbetter Games\Sunless Sea` (where `C` is your installation drive and `USERNAME` is your Windows username).
