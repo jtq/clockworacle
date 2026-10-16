@@ -1,8 +1,3 @@
-
-if(typeof FileReader === 'undefined') { // Running in node rather than a browser
-  FileReader = require('filereader');
-}
-
 var fileObjectMap = {
     'events.json' : 'Event',
     'qualities.json' : 'Quality',
@@ -14,9 +9,13 @@ var fileObjectMap = {
   };
 
 function readFile(file, callback) {
-  var reader = new FileReader();
-  reader.onload = callback;
-  reader.readAsText(file);
+  file.text()
+    .then(function(contents) {
+      callback({ target: { result: contents } });
+    })
+    .catch(function(err) {
+      setTimeout(function() { throw err; }, 0);
+    });
 }
 
 var files_to_load = 0;

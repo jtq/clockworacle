@@ -30,6 +30,16 @@ function handleDragDrop(evt) {
   // Files is a FileList of File objects. List some properties.
   var output = [];
   io.resetFilesToLoad();
+
+  var processFile = function() {
+    io.decrementFilesToLoad();
+
+    if(io.countFilesToLoad() === 0) {
+      api.wireUpObjects();
+      render.lists();
+    }
+  };
+
   for (var i = 0; i < files.length; i++) {
     var f = files[i];
     var filename = escape(f.name);
@@ -37,24 +47,17 @@ function handleDragDrop(evt) {
     var Type = api.types[typeName];
     if(Type) {
       io.incrementFilesToLoad();
-      api.readFromFile(Type, f, function() {
-        io.decrementFilesToLoad();
-
-        if(io.countFilesToLoad() === 0) {
-          api.wireUpObjects();
-          render.lists();
-        }
-      });
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                f.size, ' bytes, last modified: ',
-                f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                '</li>');
+      api.readFromFile(Type, f, processFile);
+      output.push('<li class="success"><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - supported: ',
+        f.size, ' bytes, last modified: ',
+        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+        '</li>');
     }
     else {
-      output.push('<li>ERROR: No handler for file <strong>' , escape(f.name), '</strong></li>');
+      output.push('<li class="info"><strong>' , escape(f.name), '</strong> - not supported: skipping</li>');
     }
   }
-  document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+  document.getElementById('import-file-list').innerHTML = '<ul>' + output.join('') + '</ul>';
 }
 
 module.exports = {

@@ -1,6 +1,6 @@
 var config = require('../config.json');
 var api = require('../src/scripts/api');
-var File = require('File');
+var File = require('node:buffer').File;
 var fs = require('fs');
 
 var io = require('../src/scripts/io');
@@ -20,7 +20,7 @@ function loadGameData(onAllLoaded) {
 			var Type = api.types[typeName];
 
 			var filepath = config.paths.modGameJson+'/'+filename;
-			var file = new File(filepath);
+			var file = new File([fs.readFileSync(filepath)], filename, { type: 'application/json' });
 			console.log('Reading game-data', filepath);
 
 			io.incrementFilesToLoad();

@@ -19,7 +19,7 @@ function Clump(raw, Type, parent) {
 			}
 		}
 		if(self.items[item.Id]) {
-			console.warn(Type.name+" "+item.Id+" already exists in this clump.  Duplicated IDs for different objects in the game-json?")
+			console.warn(Type.name+" "+item.Id+" already exists in this clump.  Duplicated IDs for different objects in the game-json?");
 		}
 		self.items[item.Id] = item;
 	});
