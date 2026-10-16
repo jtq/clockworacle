@@ -59,6 +59,12 @@ body {
 #tabs .panes .pane.file {
 	display: block;
 }
+#import-file-list ul li.success {
+	color: #40c040;
+}
+#import-file-list ul li.info {
+	color: #80A0ff;
+}
 
 .clump-list {
 
